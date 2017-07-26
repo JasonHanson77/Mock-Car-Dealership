@@ -1,4 +1,4 @@
-*.rb linguist-language=C#
+*.rb linguist-language=csharp
 
-special-vendored-path/* linguist-vendored
-jquery.js linguist-vendored=false
+* linguist-vendored
+*.csharp linguist-vendored=false
