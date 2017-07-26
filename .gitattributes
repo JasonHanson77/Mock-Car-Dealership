@@ -1,4 +1,2 @@
-*.rb linguist-language=csharp
-
 * linguist-vendored
 *.csharp linguist-vendored=false
