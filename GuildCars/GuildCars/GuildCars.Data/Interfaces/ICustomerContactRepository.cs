@@ -12,7 +12,5 @@ namespace GuildCars.Data.Interfaces
         IEnumerable<CustomerContact> GetAllContacts();
         CustomerContact GetContactById(int ContactId);
         void Insert(CustomerContact CustomerContact);
-        void Update(CustomerContact CustomerContact);
-        void Delete(int ContactId);
     }
 }

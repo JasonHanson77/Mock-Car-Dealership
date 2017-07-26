@@ -17,8 +17,6 @@ END
 
 GO
 
-
-
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
    WHERE ROUTINE_NAME = 'SelectAllNewCars')
       DROP PROCEDURE SelectAllNewCars
@@ -430,6 +428,60 @@ AS
 BEGIN
 	SELECT TransmissionId, TransmissionType
 	FROM Transmission
+END
+
+GO
+
+--Customer Contact Procedures
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectCustomerContactById')
+      DROP PROCEDURE SelectCustomerContactById
+GO
+
+CREATE PROCEDURE SelectCustomerContactById (
+	@ContactId INT
+) AS
+BEGIN
+	SELECT ContactId, Email, Phone, MessageBody, ContactName
+	FROM CustomerContact
+	WHERE ContactId = @ContactId
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectAllCustomerContacts')
+      DROP PROCEDURE SelectAllCustomerContacts
+GO
+
+CREATE PROCEDURE SelectAllCustomerContacts
+AS
+BEGIN
+	SELECT ContactId, Email, Phone, MessageBody, ContactName
+	FROM CustomerContact
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'CustomerContactInsert')
+      DROP PROCEDURE CustomerContactInsert
+GO
+
+CREATE PROCEDURE CustomerContactInsert (
+	@ContactId INT OUTPUT,
+	@ContactName VARCHAR(40),
+	@Phone NVARCHAR(15),
+	@Email NVARCHAR(50),
+	@MessageBody NVARCHAR(400)
+	
+) AS
+BEGIN
+	INSERT INTO CustomerContact(ContactName, Phone, Email, MessageBody)
+	VALUES (@ContactName, @Phone, @Email, @MessageBody)
+
+	SET @ContactId = SCOPE_IDENTITY();
 END
 
 GO

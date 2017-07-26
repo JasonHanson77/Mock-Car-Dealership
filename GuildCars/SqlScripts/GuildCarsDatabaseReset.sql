@@ -21,6 +21,7 @@ BEGIN
 	DBCC CHECKIDENT ('Cars', RESEED, 1)
 	DBCC CHECKIDENT ('Make', RESEED, 1)
 	DBCC CHECKIDENT ('Model', RESEED, 1)
+	DBCC CHECKIDENT ('CustomerContact', RESEED, 1)
 
 	SET IDENTITY_INSERT BodyStyle ON;
 
@@ -82,4 +83,13 @@ BEGIN
 
 	SET IDENTITY_INSERT Cars OFF;
 END
+
+SET IDENTITY_INSERT CustomerContact ON;
+
+	INSERT INTO CustomerContact(ContactId, ContactName, MessageBody, Phone, Email)
+	VALUES(1, 'Test Contact 1', 'Test Contact Message 1', '555-555-5555', 'test1@test.com'),
+	(2, 'Test Contact 2', 'Test Contact Message 2', '777-777-7777', 'test2@test.com'),
+	(3, 'Test Contact 3', 'Test Contact Message 3', '111-111-1111', 'test3@test.com')
+	
+	SET IDENTITY_INSERT CustomerContact OFF;
 
