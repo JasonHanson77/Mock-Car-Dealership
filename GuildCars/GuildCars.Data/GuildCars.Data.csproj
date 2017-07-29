@@ -55,8 +55,10 @@
     <Compile Include="Repositories\ADO\CarRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\ColorRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\CustomerContactRepositoryADO.cs" />
+    <Compile Include="Repositories\ADO\PurchaseLogRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\MakeRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\ModelRepositoryADO.cs" />
+    <Compile Include="Repositories\ADO\SpecialsRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\TransmissionRepositoryADO.cs" />
     <Compile Include="Repositories\Mock\BodyStyleRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\CarRepositoryMock.cs" />
@@ -64,6 +66,8 @@
     <Compile Include="Repositories\Mock\CustomerContactRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\MakeRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\ModelRepositoryMock.cs" />
+    <Compile Include="Repositories\Mock\PurchaseLogRepositoryMock.cs" />
+    <Compile Include="Repositories\Mock\SpecialsRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\TransmissionRepositoryMock.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

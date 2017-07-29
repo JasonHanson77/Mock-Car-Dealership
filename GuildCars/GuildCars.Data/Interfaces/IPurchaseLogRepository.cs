@@ -10,8 +10,6 @@ namespace GuildCars.Data.Interfaces
     public interface IPurchaseLogRepository
     {
         IEnumerable<PurchaseLog> GetPurchaseLogs();
-        PurchaseLog GetPurchaseLogById(int PurchaseLogId);
         void Insert(PurchaseLog PurchaseLog);
-        void Update(PurchaseLog PurchaseLog);
     }
 }

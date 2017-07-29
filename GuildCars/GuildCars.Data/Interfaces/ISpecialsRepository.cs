@@ -10,6 +10,7 @@ namespace GuildCars.Data.Interfaces
     public interface ISpecialsRepository
     {
         IEnumerable<Special> GetAll();
-        Special GetSpecialById(int SpecialId);
+        void Insert(Special special);
+        void Delete(int SpecialId);
     }
 }

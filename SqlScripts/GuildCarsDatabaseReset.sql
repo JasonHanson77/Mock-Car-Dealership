@@ -8,20 +8,25 @@ GO
 
 CREATE PROCEDURE GuildCarsDbReset AS
 BEGIN
+	DELETE FROM PurchaseLog;
 	DELETE FROM Cars;
 	DELETE FROM BodyStyle;
 	DELETE FROM Model;
 	DELETE FROM Color;
 	DELETE FROM CustomerContact;
 	DELETE FROM Make;
-	DELETE FROM PurchaseLog;
 	DELETE FROM Specials;
 	DELETE FROM Transmission;
+	DELETE FROM AspNetUsers WHERE Id IN ('00000000-0000-0000-0000-000000000000', '11111111-1111-1111-1111-111111111111',
+	'22222222-2222-2222-2222-222222222222', '33333333-3333-3333-3333-333333333333');
+	
 
 	DBCC CHECKIDENT ('Cars', RESEED, 1)
 	DBCC CHECKIDENT ('Make', RESEED, 1)
 	DBCC CHECKIDENT ('Model', RESEED, 1)
 	DBCC CHECKIDENT ('CustomerContact', RESEED, 1)
+	DBCC CHECKIDENT ('PurchaseLog', RESEED, 1)
+	DBCC CHECKIDENT ('Specials', RESEED, 1)
 
 	SET IDENTITY_INSERT BodyStyle ON;
 
@@ -82,9 +87,8 @@ BEGIN
 	(4, 2005, 'false', 'false', 'false', 1, 111200, '4ABC4ABC4ABC4ABC4', 5, 4, 1, 4, 4, 4, 4000.00, 5000.00, 'Images\2005DodgeGrandCaravan.jpg', 'Certified and ready to take your family anywhere.' )
 
 	SET IDENTITY_INSERT Cars OFF;
-END
 
-SET IDENTITY_INSERT CustomerContact ON;
+	SET IDENTITY_INSERT CustomerContact ON;
 
 	INSERT INTO CustomerContact(ContactId, ContactName, MessageBody, Phone, Email)
 	VALUES(1, 'Test Contact 1', 'Test Contact Message 1', '555-555-5555', 'test1@test.com'),
@@ -93,3 +97,43 @@ SET IDENTITY_INSERT CustomerContact ON;
 	
 	SET IDENTITY_INSERT CustomerContact OFF;
 
+	-- Test Users
+
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
+	VALUES('00000000-0000-0000-0000-000000000000', 0, 0, 'sales1@test.com', 0, 0, 0, 'Sales Test User 1');
+
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
+	VALUES('11111111-1111-1111-1111-111111111111', 0, 0, 'sales2@test.com', 0, 0, 0, 'Sales Test User 2');
+
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
+	VALUES('22222222-2222-2222-2222-222222222222', 0, 0, 'admin1@test.com', 0, 0, 0, 'Admin Test User 1');
+
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
+	VALUES('33333333-3333-3333-3333-333333333333', 0, 0, 'admin2@test.com', 0, 0, 0, 'Admin Test User 2');
+
+	SET IDENTITY_INSERT PurchaseLog ON;
+
+	INSERT INTO PurchaseLog(PurchaseLogId, PurchaserName, DateSold, CarId, SalesPersonId, PurchasePrice,
+	PurchaseType, Phone, Email, AddressOne, AddressTwo, City, ZipCode)
+	VALUES(1, 'Purchaser One', '1/1/2017', 1, '00000000-0000-0000-0000-000000000000', 
+	17000, 'Dealer Finance', '000-000-0000', 'testpurchase1@test.com', '123 Main Street',
+	NULL, 'Hampton', '23652'),
+	(2, 'Purchaser Two', '1/1/2016', 4, '11111111-1111-1111-1111-111111111111',
+	4000, 'Dealer Finance', '111-111-1111', 'testpurchase2@test.com', '123 Elm Street', 
+	'Apartment 33D', 'York', '23692')
+	
+	SET IDENTITY_INSERT PurchaseLog OFF;
+
+	SET IDENTITY_INSERT Specials ON;
+
+	INSERT INTO Specials(SpecialsId, SpecialDetails)
+	VALUES(1, '$1000 Rebate on Toyota SUVs!'),
+	(2, 'Free tank of gas with every purchase!'),
+	(3, 'Free extended Warranty on all Ford models!'),
+	(4, '1% Financing special all Summer Long!')
+	
+	SET IDENTITY_INSERT Specials OFF;
+
+	END
+
+	

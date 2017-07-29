@@ -485,3 +485,102 @@ BEGIN
 END
 
 GO
+
+--Purchase Log Procedures
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'PurchaseLogInsert')
+      DROP PROCEDURE PurchaseLogInsert
+GO
+
+CREATE PROCEDURE PurchaseLogInsert (
+	@PurchaseLogId INT OUTPUT,
+	@PurchaserName VARCHAR(40),
+	@PurchaseType NVARCHAR(16),
+	@Email NVARCHAR(50),
+	@CarId INT,
+	@AddressOne NVARCHAR(50),
+	@AddressTwo NVARCHAR(50),
+	@City NVARCHAR(30),
+	@Phone NVARCHAR(15),
+	@ZipCode VARCHAR(5),
+	@SalesPersonId NVARCHAR(128),
+	@DateSold DATETIME2,
+	@PurchasePrice DECIMAL(10, 2)
+) AS
+BEGIN
+	INSERT INTO PurchaseLog(PurchaserName, Email, Phone, AddressOne, AddressTwo,
+	 City, ZipCode, CarId, PurchasePrice, PurchaseType, SalesPersonId, DateSold)
+	VALUES (@PurchaserName, @Email, @Phone, @AddressOne, @AddressTwo,
+	 @City, @ZipCode, @CarId, @PurchasePrice, @PurchaseType, @SalesPersonId, @DateSold)
+
+	SET @PurchaseLogId = SCOPE_IDENTITY();
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectAllPurchaseLogs')
+      DROP PROCEDURE SelectAllPurchaseLogs
+GO
+
+CREATE PROCEDURE SelectAllPurchaseLogs
+AS
+BEGIN
+	SELECT *
+	FROM PurchaseLog
+END
+
+GO
+
+-- Specials Procedures
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectAllSpecials')
+      DROP PROCEDURE SelectAllSpecials
+GO
+
+CREATE PROCEDURE SelectAllSpecials
+AS
+BEGIN
+	SELECT *
+	FROM Specials
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SpecialInsert')
+      DROP PROCEDURE SpecialInsert
+
+GO
+
+CREATE PROCEDURE SpecialInsert (
+	@SpecialId INT OUTPUT,
+	@SpecialDetails NVARCHAR(400)
+) AS
+BEGIN
+	INSERT INTO Specials(SpecialDetails)
+	VALUES (@SpecialDetails)
+
+	SET @SpecialId = SCOPE_IDENTITY();
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SpecialDelete')
+      DROP PROCEDURE SpecialDelete
+GO
+
+CREATE PROCEDURE SpecialDelete (
+	@SpecialId int
+) AS
+BEGIN
+	DELETE FROM Specials
+	WHERE SpecialsId = @SpecialId
+END
+
+GO
+
+
