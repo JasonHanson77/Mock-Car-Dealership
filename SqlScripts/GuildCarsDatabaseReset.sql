@@ -18,7 +18,7 @@ BEGIN
 	DELETE FROM Specials;
 	DELETE FROM Transmission;
 	DELETE FROM AspNetUsers WHERE Id IN ('00000000-0000-0000-0000-000000000000', '11111111-1111-1111-1111-111111111111',
-	'22222222-2222-2222-2222-222222222222', '33333333-3333-3333-3333-333333333333');
+	'22222222-2222-2222-2222-222222222222', '33333333-3333-3333-3333-333333333333', 'Added-Test-User');
 	
 
 	DBCC CHECKIDENT ('Cars', RESEED, 1)
@@ -81,10 +81,10 @@ BEGIN
 
 	INSERT INTO Cars(CarId, ModelYear, IsNew, IsFeatured, IsSold, UnitsInStock, Mileage, VIN, BodyColorId,
 	BodyStyleId, TransmissionId, MakeId, ModelId, InteriorColorId, SalePrice, MSRP, IMGFilePath, VehicleDetails )
-	VALUES (1, 2017, 'true', 'false', 'true', 3, 0, '1ABC1ABC1ABC1ABC1', 1, 1, 1, 1, 3, 1, 50315.00, 51815.00, 'Images\2017ToyotaTundra1794.jpg', 'Brand New and looks great.' ),
-	(2, 2018, 'true', 'true', 'false', 5, 200, '2ABC2ABC2ABC2ABC2', 2, 2, 2, 2, 3, 3, 33000, 34150, 'Images\2018AcuraTLX.png', 'A silver bullet of power and dependability.' ),
-	(3, 2017, 'false', 'true', 'true', 1, 1200, '3ABC3ABC3ABC3ABC3', 5, 3, 1, 3, 1, 5, 22669, 24500, 'Images\2017FordEscape.png', 'Loaded! Used Price for Brand New Quality.' ),
-	(4, 2005, 'false', 'false', 'false', 1, 111200, '4ABC4ABC4ABC4ABC4', 5, 4, 1, 4, 4, 4, 4000.00, 5000.00, 'Images\2005DodgeGrandCaravan.jpg', 'Certified and ready to take your family anywhere.' )
+	VALUES (1, CONVERT(DATE, '1/1/2017'), 'true', 'false', 'true', 3, 0, '1ABC1ABC1ABC1ABC1', 1, 1, 1, 1, 1, 1, 50315.00, 51815.00, 'Images\2017ToyotaTundra1794.jpg', 'Brand New and looks great.' ),
+	(2, CONVERT(DATE, '1/1/2018'), 'true', 'true', 'false', 5, 200, '2ABC2ABC2ABC2ABC2', 2, 2, 2, 2, 3, 3, 33000, 34150, 'Images\2018AcuraTLX.png', 'A silver bullet of power and dependability.' ),
+	(3, CONVERT(DATE, '1/1/2017'), 'false', 'true', 'true', 1, 1200, '3ABC3ABC3ABC3ABC3', 5, 3, 1, 3, 2, 5, 22669, 24500, 'Images\2017FordEscape.png', 'Loaded! Used Price for Brand New Quality.' ),
+	(4, CONVERT(DATE, '1/1/2005'), 'false', 'false', 'false', 1, 111200, '4ABC4ABC4ABC4ABC4', 5, 4, 1, 4, 4, 4, 4000.00, 5000.00, 'Images\2005DodgeGrandCaravan.jpg', 'Certified and ready to take your family anywhere.' )
 
 	SET IDENTITY_INSERT Cars OFF;
 
@@ -99,17 +99,17 @@ BEGIN
 
 	-- Test Users
 
-	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
-	VALUES('00000000-0000-0000-0000-000000000000', 0, 0, 'sales1@test.com', 0, 0, 0, 'Sales Test User 1');
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName, UserRole)
+	VALUES('00000000-0000-0000-0000-000000000000', 0, 0, 'sales1@test.com', 0, 0, 0, 'Sales Test User 1', 'Disabled');
 
-	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
-	VALUES('11111111-1111-1111-1111-111111111111', 0, 0, 'sales2@test.com', 0, 0, 0, 'Sales Test User 2');
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName, UserRole)
+	VALUES('11111111-1111-1111-1111-111111111111', 0, 0, 'sales2@test.com', 0, 0, 0, 'Sales Test User 2', 'Sales');
 
-	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
-	VALUES('22222222-2222-2222-2222-222222222222', 0, 0, 'admin1@test.com', 0, 0, 0, 'Admin Test User 1');
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName, UserRole)
+	VALUES('22222222-2222-2222-2222-222222222222', 0, 0, 'admin1@test.com', 0, 0, 0, 'Admin Test User 1', 'Admin');
 
-	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName)
-	VALUES('33333333-3333-3333-3333-333333333333', 0, 0, 'admin2@test.com', 0, 0, 0, 'Admin Test User 2');
+	INSERT INTO AspNetUsers(Id, EmailConfirmed, PhoneNumberConfirmed, Email, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, UserName, UserRole)
+	VALUES('33333333-3333-3333-3333-333333333333', 0, 0, 'admin2@test.com', 0, 0, 0, 'Admin Test User 2', 'Admin');
 
 	SET IDENTITY_INSERT PurchaseLog ON;
 
@@ -120,17 +120,23 @@ BEGIN
 	NULL, 'Hampton', '23652'),
 	(2, 'Purchaser Two', '1/1/2016', 4, '11111111-1111-1111-1111-111111111111',
 	4000, 'Dealer Finance', '111-111-1111', 'testpurchase2@test.com', '123 Elm Street', 
+	'Apartment 33D', 'York', '23692'),
+	(3, 'Purchaser Three', '4/1/2017', 3, '00000000-0000-0000-0000-000000000000', 
+	10000, 'Dealer Finance', '000-000-0000', 'testpurchase3@test.com', '123 Odd Street',
+	NULL, 'Hampton', '23652'),
+	(4, 'Purchaser Four', '1/1/2016', 1, '11111111-1111-1111-1111-111111111111',
+	14000, 'Dealer Finance', '111-111-1111', 'testpurchase4@test.com', '123 Elm Street', 
 	'Apartment 33D', 'York', '23692')
-	
+
 	SET IDENTITY_INSERT PurchaseLog OFF;
 
 	SET IDENTITY_INSERT Specials ON;
 
-	INSERT INTO Specials(SpecialsId, SpecialDetails)
-	VALUES(1, '$1000 Rebate on Toyota SUVs!'),
-	(2, 'Free tank of gas with every purchase!'),
-	(3, 'Free extended Warranty on all Ford models!'),
-	(4, '1% Financing special all Summer Long!')
+	INSERT INTO Specials(SpecialsId, SpecialDetails, Title)
+	VALUES(1, '$1000 Rebate on Toyota SUVs!', '$1000 Rebate Special!'),
+	(2, 'Free tank of gas with every purchase!', 'Free tank of gas!'),
+	(3, 'Free extended warranty on all Ford models!', 'Ford free warranty special'),
+	(4, '1% Financing special all Summer Long!', '1% Financing special')
 	
 	SET IDENTITY_INSERT Specials OFF;
 

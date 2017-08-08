@@ -1,5 +1,5 @@
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Models\bin\Debug\GuildCars.Models.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Models\bin\Debug\GuildCars.Models.pdb
-C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csprojResolveAssemblyReference.cache
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.pdb
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Models\obj\Debug\GuildCars.Models.csprojResolveAssemblyReference.cache

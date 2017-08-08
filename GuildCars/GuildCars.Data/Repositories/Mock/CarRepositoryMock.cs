@@ -13,10 +13,10 @@ namespace GuildCars.Data.Repositories.Mock
     {
         private static List<Car> _cars = new List<Car>();
 
-        private static Car CarOne = new Car
+        private static Car _carOne = new Car
         {
             CarId = 1,
-            ModelYear = 2017,
+            ModelYear = new DateTime(2017, 1, 1),
             IsNew = true,
             IsFeatured = false,
             IsSold = true,
@@ -27,7 +27,7 @@ namespace GuildCars.Data.Repositories.Mock
             BodyStyleId = 2,
             TransmissionId = 1,
             MakeId = 1,
-            ModelId = 3,
+            ModelId = 1,
             InteriorColorId = 1,
             SalePrice = 50315.00m,
             MSRP = 51815.00m,
@@ -35,10 +35,10 @@ namespace GuildCars.Data.Repositories.Mock
             VehicleDetails = "Brand New and looks great."
         };
 
-        private static Car CarTwo = new Car
+        private static Car _carTwo = new Car
         {
             CarId = 2,
-            ModelYear = 2018,
+            ModelYear = new DateTime(2018, 1, 1),
             IsNew = true,
             IsFeatured = true,
             IsSold = false,
@@ -57,10 +57,10 @@ namespace GuildCars.Data.Repositories.Mock
             VehicleDetails = "A silver bullet of power and dependability."
         };
 
-        private static Car CarThree = new Car
+        private static Car _carThree = new Car
         {
             CarId = 3,
-            ModelYear = 2017,
+            ModelYear = new DateTime(2017, 1, 1),
             IsNew = false,
             IsFeatured = true,
             IsSold = true,
@@ -79,10 +79,10 @@ namespace GuildCars.Data.Repositories.Mock
             VehicleDetails = "Loaded! Used Price for Brand New Quality."
         };
 
-        private static Car CarFour = new Car
+        private static Car _carFour = new Car
         {
             CarId = 4,
-            ModelYear = 2005,
+            ModelYear = new DateTime(2005, 1, 1),
             IsNew = false,
             IsFeatured = false,
             IsSold = false,
@@ -105,10 +105,10 @@ namespace GuildCars.Data.Repositories.Mock
         {
             if (_cars.Count() == 0)
             {
-                _cars.Add(CarOne);
-                _cars.Add(CarTwo);
-                _cars.Add(CarThree);
-                _cars.Add(CarFour);
+                _cars.Add(_carOne);
+                _cars.Add(_carTwo);
+                _cars.Add(_carThree);
+                _cars.Add(_carFour);
             }
         }
 

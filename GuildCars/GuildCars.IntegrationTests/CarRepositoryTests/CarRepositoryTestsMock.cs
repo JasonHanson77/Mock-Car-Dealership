@@ -37,7 +37,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", car.VIN);
             Assert.AreEqual(2, car.CarId);
-            Assert.AreEqual(2018, car.ModelYear);
+            Assert.AreEqual(new DateTime(2018, 1, 1), car.ModelYear);
             Assert.IsTrue(car.IsNew);
             Assert.IsFalse(car.IsSold);
             Assert.IsTrue(car.IsFeatured);
@@ -65,7 +65,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", cars[1].VIN);
             Assert.AreEqual(2, cars[1].CarId);
-            Assert.AreEqual(2018, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2018, 1, 1), cars[1].ModelYear);
             Assert.IsTrue(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsTrue(cars[1].IsFeatured);
@@ -93,7 +93,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
             Assert.AreEqual(2, featuredCars.Count);
 
             Assert.AreEqual(2, featuredCars[0].CarId);
-            Assert.AreEqual(2018, featuredCars[0].Year);
+            Assert.AreEqual(new DateTime(2018, 1, 1), featuredCars[0].Year);
             Assert.AreEqual(2, featuredCars[0].MakeId);
             Assert.AreEqual(3, featuredCars[0].ModelId);
             Assert.AreEqual(33000.00m, featuredCars[0].Price);
@@ -112,7 +112,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", cars[1].VIN);
             Assert.AreEqual(2, cars[1].CarId);
-            Assert.AreEqual(2018, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2018, 1, 1), cars[1].ModelYear);
             Assert.IsTrue(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsTrue(cars[1].IsFeatured);
@@ -140,7 +140,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
 
             Assert.AreEqual("4ABC4ABC4ABC4ABC4", cars[1].VIN);
             Assert.AreEqual(4, cars[1].CarId);
-            Assert.AreEqual(2005, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2005, 1, 1), cars[1].ModelYear);
             Assert.IsFalse(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsFalse(cars[1].IsFeatured);
@@ -168,7 +168,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
 
             Assert.AreEqual("4ABC4ABC4ABC4ABC4", cars[1].VIN);
             Assert.AreEqual(4, cars[1].CarId);
-            Assert.AreEqual(2005, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2005, 1, 1), cars[1].ModelYear);
             Assert.IsFalse(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsFalse(cars[1].IsFeatured);
@@ -196,7 +196,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
 
             Assert.AreEqual("3ABC3ABC3ABC3ABC3", cars[1].VIN);
             Assert.AreEqual(3, cars[1].CarId);
-            Assert.AreEqual(2017, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2017, 1, 1), cars[1].ModelYear);
             Assert.IsFalse(cars[1].IsNew);
             Assert.IsTrue(cars[1].IsSold);
             Assert.IsTrue(cars[1].IsFeatured);
@@ -219,7 +219,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         {
             Car car = new Car
             {
-                ModelYear = 2015,
+                ModelYear = new DateTime(2015, 1, 1),
                 IsNew = false,
                 IsFeatured = true,
                 IsSold = false,
@@ -270,7 +270,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         {
             Car car = new Car
             {
-                ModelYear = 2015,
+                ModelYear = new DateTime(2015, 1, 1),
                 IsNew = false,
                 IsFeatured = true,
                 IsSold = false,
@@ -310,7 +310,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         {
             Car car = new Car
             {
-                ModelYear = 2015,
+                ModelYear = new DateTime(2015, 1, 1),
                 IsNew = false,
                 IsFeatured = true,
                 IsSold = false,
@@ -344,7 +344,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
             car.VIN = "6ABC6ABC6ABC6ABC6";
             car.VehicleDetails = "Updated";
             car.Mileage = "3";
-            car.ModelYear = 2018;
+            car.ModelYear = new DateTime(2018, 1, 1);
             car.MakeId = 2;
             car.ModelId = 3;
             car.TransmissionId = 1;
@@ -367,7 +367,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
             Assert.AreEqual(updatedCar.VIN, "6ABC6ABC6ABC6ABC6");
             Assert.AreEqual(updatedCar.VehicleDetails, "Updated");
             Assert.AreEqual(updatedCar.Mileage, "3");
-            Assert.AreEqual(updatedCar.ModelYear, 2018);
+            Assert.AreEqual(updatedCar.ModelYear, new DateTime(2018, 1, 1));
             Assert.AreEqual(updatedCar.MakeId, 2);
             Assert.AreEqual(updatedCar.ModelId, 3);
             Assert.AreEqual(updatedCar.TransmissionId, 1);

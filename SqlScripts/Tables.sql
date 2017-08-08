@@ -89,7 +89,7 @@ CREATE TABLE Cars(
 	IsSold BIT NOT NULL,
 	UnitsInStock INT NOT NULL,
 	Mileage VARCHAR(7) NOT NULL,
-	ModelYear INT NOT NULL,
+	ModelYear DateTime2 NOT NULL,
 	VIN VARCHAR(17) NOT NULL,
 	BodyStyleId INT NOT NULL CONSTRAINT FK_BodyStyleId FOREIGN KEY REFERENCES BodyStyle(BodyStyleId),
 	TransmissionId INT NOT NULL CONSTRAINT FK_TransmissionId FOREIGN KEY REFERENCES Transmission(TransmissionId),
@@ -105,7 +105,8 @@ CREATE TABLE Cars(
 
 CREATE TABLE Specials(
 	SpecialsId INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-	SpecialDetails NVARCHAR(400) NOT NULL
+	SpecialDetails NVARCHAR(400) NOT NULL,
+	Title NVARCHAR(100) NOT NULL
 )
 
 

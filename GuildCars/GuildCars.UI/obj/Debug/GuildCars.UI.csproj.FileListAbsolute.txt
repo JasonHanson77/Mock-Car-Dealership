@@ -123,7 +123,6 @@ C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\G
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\obj\Debug\GuildCars.UI.csprojResolveAssemblyReference.cache
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\obj\Debug\GuildCars.UI.Migrations.Init.resources
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\obj\Debug\GuildCars.UI.csproj.GenerateResource.Cache
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.UI\obj\Debug\GuildCars.UI.dll

@@ -68,6 +68,7 @@ namespace GuildCars.Data.Repositories.ADO
 
                             special.SpecialId = (int)dr["SpecialsId"];
                             special.SpecialDetails = dr["SpecialDetails"].ToString();
+                            special.Title = dr["Title"].ToString();
 
                             specials.Add(special);
                         }
@@ -109,6 +110,7 @@ namespace GuildCars.Data.Repositories.ADO
                     cmd.Parameters.Add(param);
 
                     cmd.Parameters.AddWithValue("@SpecialDetails", special.SpecialDetails);
+                    cmd.Parameters.AddWithValue("Title", special.Title);
 
                     dbConnection.Open();
 

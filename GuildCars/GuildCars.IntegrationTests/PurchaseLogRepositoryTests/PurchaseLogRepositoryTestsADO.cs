@@ -59,7 +59,7 @@ namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
 
             List<PurchaseLog> purchaseLogs = repo.GetPurchaseLogs().ToList();
 
-            Assert.AreEqual(2, purchaseLogs.Count);
+            Assert.AreEqual(4, purchaseLogs.Count);
 
             Assert.AreEqual("Purchaser One", purchaseLogs[0].PurchaseName);
             Assert.AreEqual(1, purchaseLogs[0].PurchaseLogId);
@@ -82,7 +82,7 @@ namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
             PurchaseLog purchaseLog = new PurchaseLog
             {
                 PurchaseType = "Bank Finance",
-                PurchaseName = "Purchaser Three",
+                PurchaseName = "Purchaser Five",
                 PurchasePrice = 12000.00m,
                 CarId = 2,
                 DateSold = new DateTime(2014, 1, 1),
@@ -100,21 +100,21 @@ namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
 
             var purchaseLogs = repo.GetPurchaseLogs().ToList();
 
-            Assert.AreEqual(3, purchaseLogs.Count);
+            Assert.AreEqual(5, purchaseLogs.Count);
 
-            Assert.AreEqual("Purchaser Three", purchaseLogs[2].PurchaseName);
-            Assert.AreEqual(3, purchaseLogs[2].PurchaseLogId);
-            Assert.AreEqual("11111111-1111-1111-1111-111111111111", purchaseLogs[2].SalesPersonId);
-            Assert.AreEqual("Gloucester", purchaseLogs[2].City);
-            Assert.AreEqual("106 Test Road", purchaseLogs[2].AddressOne);
-            Assert.IsTrue(String.IsNullOrEmpty(purchaseLogs[2].AddressTwo));
-            Assert.AreEqual("23072", purchaseLogs[2].ZipCode);
-            Assert.AreEqual("Bank Finance", purchaseLogs[2].PurchaseType);
-            Assert.AreEqual(12000m, purchaseLogs[2].PurchasePrice);
-            Assert.AreEqual(new DateTime(2014, 1, 1), purchaseLogs[2].DateSold);
-            Assert.AreEqual("testpurchase3@test.com", purchaseLogs[2].Email);
-            Assert.AreEqual("333-333-3333", purchaseLogs[2].Phone);
-            Assert.AreEqual(2, purchaseLogs[2].CarId);
+            Assert.AreEqual("Purchaser Five", purchaseLogs[4].PurchaseName);
+            Assert.AreEqual(5, purchaseLogs[4].PurchaseLogId);
+            Assert.AreEqual("11111111-1111-1111-1111-111111111111", purchaseLogs[4].SalesPersonId);
+            Assert.AreEqual("Gloucester", purchaseLogs[4].City);
+            Assert.AreEqual("106 Test Road", purchaseLogs[4].AddressOne);
+            Assert.IsTrue(String.IsNullOrEmpty(purchaseLogs[4].AddressTwo));
+            Assert.AreEqual("23072", purchaseLogs[4].ZipCode);
+            Assert.AreEqual("Bank Finance", purchaseLogs[4].PurchaseType);
+            Assert.AreEqual(12000m, purchaseLogs[4].PurchasePrice);
+            Assert.AreEqual(new DateTime(2014, 1, 1), purchaseLogs[4].DateSold);
+            Assert.AreEqual("testpurchase3@test.com", purchaseLogs[4].Email);
+            Assert.AreEqual("333-333-3333", purchaseLogs[4].Phone);
+            Assert.AreEqual(2, purchaseLogs[4].CarId);
         }
     }
 }

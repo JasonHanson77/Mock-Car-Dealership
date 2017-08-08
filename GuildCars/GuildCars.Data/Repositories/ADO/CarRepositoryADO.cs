@@ -68,7 +68,7 @@ namespace GuildCars.Data.Repositories.ADO
                             Car car = new Car();
 
                             car.CarId = (int)dr["CarId"];
-                            car.ModelYear = (int)dr["ModelYear"];
+                            car.ModelYear = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"])); ;
                             car.IsNew = (bool)dr["IsNew"];
                             car.IsFeatured = (bool)dr["IsFeatured"];
                             car.IsSold = (bool)dr["IsSold"];
@@ -138,7 +138,7 @@ namespace GuildCars.Data.Repositories.ADO
                             featuredCar.ModelId = (int)dr["ModelId"];
                             featuredCar.Make = dr["MakeName"].ToString();
                             featuredCar.Model = dr["ModelName"].ToString();
-                            featuredCar.Year = (int)dr["ModelYear"];
+                            featuredCar.Year = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"])); 
                             featuredCar.Price = (decimal)dr["SalePrice"];
 
                             featuredCars.Add(featuredCar);
@@ -186,7 +186,7 @@ namespace GuildCars.Data.Repositories.ADO
                             Car car = new Car();
 
                             car.CarId = (int)dr["CarId"];
-                            car.ModelYear = (int)dr["ModelYear"];
+                            car.ModelYear = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
                             car.IsNew = (bool)dr["IsNew"];
                             car.IsFeatured = (bool)dr["IsFeatured"];
                             car.IsSold = (bool)dr["IsSold"];
@@ -249,7 +249,7 @@ namespace GuildCars.Data.Repositories.ADO
                             Car car = new Car();
 
                             car.CarId = (int)dr["CarId"];
-                            car.ModelYear = (int)dr["ModelYear"];
+                            car.ModelYear = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
                             car.IsNew = (bool)dr["IsNew"];
                             car.IsFeatured = (bool)dr["IsFeatured"];
                             car.IsSold = (bool)dr["IsSold"];
@@ -312,7 +312,7 @@ namespace GuildCars.Data.Repositories.ADO
                             Car car = new Car();
 
                             car.CarId = (int)dr["CarId"];
-                            car.ModelYear = (int)dr["ModelYear"];
+                            car.ModelYear = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
                             car.IsNew = (bool)dr["IsNew"];
                             car.IsFeatured = (bool)dr["IsFeatured"];
                             car.IsSold = (bool)dr["IsSold"];
@@ -375,7 +375,7 @@ namespace GuildCars.Data.Repositories.ADO
                             Car car = new Car();
 
                             car.CarId = (int)dr["CarId"];
-                            car.ModelYear = (int)dr["ModelYear"];
+                            car.ModelYear = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
                             car.IsNew = (bool)dr["IsNew"];
                             car.IsFeatured = (bool)dr["IsFeatured"];
                             car.IsSold = (bool)dr["IsSold"];
@@ -441,7 +441,7 @@ namespace GuildCars.Data.Repositories.ADO
                         {
                             car = new Car();
                             car.CarId = (int)dr["CarId"];
-                            car.ModelYear = (int)dr["ModelYear"];
+                            car.ModelYear = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
                             car.IsNew = (bool)dr["IsNew"];
                             car.IsFeatured = (bool)dr["IsFeatured"];
                             car.IsSold = (bool)dr["IsSold"];
@@ -592,5 +592,126 @@ namespace GuildCars.Data.Repositories.ADO
                 }
             }
         }
+
+        public IEnumerable<SearchResultItem> SearchCars(CarsSearchParameters Parameters)
+        {
+            List<SearchResultItem> carsSearchResults = new List<SearchResultItem>();
+            bool parametersChosen = false;
+
+            using (var dbConnection = new SqlConnection(Settings.GetConnectionString()))
+            {
+                string query = "SELECT TOP 20 c.CarId AS \"CarId\", c.ModelYear AS \"ModelYear\", mk.MakeName AS \"Make\",  md.ModelName AS \"Model\", c.IMGFilePath AS \"IMGURL\"," +
+                    "ic.ColorName AS \"InteriorColor\", bc.ColorName AS \"BodyColor\", t.TransmissionType AS \"Transmission\","
+                    + "c.Mileage AS \"Mileage\", c.VIN AS \"VIN\", c.SalePrice AS \"SalePrice\", c.MSRP AS \"MSRP\"" +
+                    "FROM Cars c INNER JOIN Make mk ON mk.MakeId = c.MakeId INNER JOIN Model md ON md.MakeId = mk.MakeId INNER JOIN " +
+                    "Color bc ON c.BodyColorId = bc.ColorId INNER JOIN Color ic ON ic.ColorId = c.InteriorColorId  INNER JOIN " +
+                    "Transmission t ON t.TransmissionId = c.TransmissionId WHERE 1 = 1";
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = dbConnection;
+
+                query += "AND IsNew = @IsNew ";
+                cmd.Parameters.AddWithValue("@IsNew", Parameters.IsNew);
+
+                if (Parameters.MinYear.HasValue)
+                {
+                    query += "AND ModelYear >= @MinYear ";
+                    cmd.Parameters.AddWithValue("@MinYear", Parameters.MinYear.Value);
+
+                    parametersChosen = true;
+                }
+
+                if (Parameters.MaxYear.HasValue)
+                {
+                    query += "AND ModelYear <= @MaxYear ";
+                    cmd.Parameters.AddWithValue("@MaxYear", Parameters.MaxYear.Value);
+
+                    parametersChosen = true;
+                }
+
+                if (Parameters.MinPrice.HasValue)
+                {
+                    query += "AND SalePrice <= @MinPrice ";
+                    cmd.Parameters.AddWithValue("@MinPrice", Parameters.MinPrice.Value);
+
+                    parametersChosen = true;
+                }
+
+                if (Parameters.MaxPrice.HasValue)
+                {
+                    query += "AND SalePrice <= @MaxPrice ";
+                    cmd.Parameters.AddWithValue("@MaxPrice", Parameters.MaxYear.Value);
+
+                    parametersChosen = true;
+                }
+
+                if (!string.IsNullOrEmpty(Parameters.SearchTerm))
+                {
+                    query += "AND MakeName LIKE @SearchTerm OR ModelName LIKE @SearchTerm OR ModelYear LIKE @SearchTerm ";
+                    cmd.Parameters.AddWithValue("@SearchTerm", Parameters.SearchTerm + '%');
+
+                    parametersChosen = true;
+                }
+
+                if (parametersChosen)
+                {
+                    query += "GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
+                            "Mileage, VIN, SalePrice, MSRP ";
+                    cmd.CommandText = query;
+                }
+                else
+                {
+                    query += "GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
+                            "Mileage, VIN, SalePrice, MSRP  ORDER BY MSRP DESC ";
+                    cmd.CommandText = query;
+                }
+
+                dbConnection.Open();
+                try {
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            SearchResultItem carSearchResult = new SearchResultItem();
+
+                            carSearchResult.CarId = (int)dr["CarId"];
+                            carSearchResult.Year = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
+                            carSearchResult.Make = dr["Make"].ToString();
+                            carSearchResult.Model = dr["Model"].ToString();
+                            carSearchResult.IMGURL = dr["IMGURL"].ToString();
+                            carSearchResult.InteriorColor = dr["InteriorColor"].ToString();
+                            carSearchResult.BodyColor = dr["BodyColor"].ToString();
+                            carSearchResult.Transmission = dr["Transmission"].ToString();
+                            carSearchResult.Mileage = dr["Mileage"].ToString();
+                            carSearchResult.VIN = dr["VIN"].ToString();
+                            carSearchResult.SalePrice = (decimal)dr["SalePrice"];
+                            carSearchResult.MSRP = (decimal)dr["MSRP"];
+
+
+                            carsSearchResults.Add(carSearchResult);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = String.Format(CultureInfo.CurrentCulture,
+                              "Exception Type: {0}, Message: {1}{2}",
+                              ex.GetType(),
+                              ex.Message,
+                              ex.InnerException == null ? String.Empty :
+                              String.Format(CultureInfo.CurrentCulture,
+                                           " InnerException Type: {0}, Message: {1}",
+                                           ex.InnerException.GetType(),
+                                           ex.InnerException.Message));
+
+                    System.Diagnostics.Debug.WriteLine(errorMessage);
+
+                    dbConnection.Close();
+                }
+            }
+
+            return carsSearchResults;
+        }
+
     }
 }

@@ -11,7 +11,7 @@ namespace GuildCars.Models.Queries
         public int CarId { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
-        public int Year { get; set; }
+        public DateTime Year { get; set; }
         public string IMGURL { get; set; }
         public string InteriorColor { get; set; }
         public string BodyColor { get; set; }
@@ -19,6 +19,6 @@ namespace GuildCars.Models.Queries
         public string Mileage { get; set; }
         public string VIN { get; set; }
         public decimal SalePrice { get; set; }
-        public decimal  MRSP { get; set; }
+        public decimal  MSRP { get; set; }
     }
 }

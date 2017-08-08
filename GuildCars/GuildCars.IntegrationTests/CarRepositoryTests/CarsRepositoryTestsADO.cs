@@ -100,7 +100,7 @@ namespace GuildCars.IntegrationTests
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", car.VIN);
             Assert.AreEqual(2, car.CarId);
-            Assert.AreEqual(2018, car.ModelYear);
+            Assert.AreEqual(new DateTime(2018, 1, 1), car.ModelYear);
             Assert.IsTrue(car.IsNew);
             Assert.IsFalse(car.IsSold);
             Assert.IsTrue(car.IsFeatured);
@@ -128,7 +128,7 @@ namespace GuildCars.IntegrationTests
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", cars[1].VIN);
             Assert.AreEqual(2, cars[1].CarId);
-            Assert.AreEqual(2018, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2018, 1, 1), cars[1].ModelYear);
             Assert.IsTrue(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsTrue(cars[1].IsFeatured);
@@ -155,7 +155,7 @@ namespace GuildCars.IntegrationTests
             Assert.AreEqual(2, featuredCars.Count);
 
             Assert.AreEqual(2, featuredCars[0].CarId);
-            Assert.AreEqual(2018, featuredCars[0].Year);
+            Assert.AreEqual(new DateTime(2018, 1, 1), featuredCars[0].Year);
             Assert.AreEqual(2, featuredCars[0].MakeId);
             Assert.AreEqual(3, featuredCars[0].ModelId);
             Assert.AreEqual(33000.00m, featuredCars[0].Price);
@@ -174,7 +174,7 @@ namespace GuildCars.IntegrationTests
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", cars[1].VIN);
             Assert.AreEqual(2, cars[1].CarId);
-            Assert.AreEqual(2018, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2018, 1, 1), cars[1].ModelYear);
             Assert.IsTrue(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsTrue(cars[1].IsFeatured);
@@ -202,7 +202,7 @@ namespace GuildCars.IntegrationTests
 
             Assert.AreEqual("4ABC4ABC4ABC4ABC4", cars[1].VIN);
             Assert.AreEqual(4, cars[1].CarId);
-            Assert.AreEqual(2005, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2005, 1, 1), cars[1].ModelYear);
             Assert.IsFalse(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsFalse(cars[1].IsFeatured);
@@ -230,7 +230,7 @@ namespace GuildCars.IntegrationTests
 
             Assert.AreEqual("4ABC4ABC4ABC4ABC4", cars[1].VIN);
             Assert.AreEqual(4, cars[1].CarId);
-            Assert.AreEqual(2005, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2005, 1, 1), cars[1].ModelYear);
             Assert.IsFalse(cars[1].IsNew);
             Assert.IsFalse(cars[1].IsSold);
             Assert.IsFalse(cars[1].IsFeatured);
@@ -258,7 +258,7 @@ namespace GuildCars.IntegrationTests
 
             Assert.AreEqual("3ABC3ABC3ABC3ABC3", cars[1].VIN);
             Assert.AreEqual(3, cars[1].CarId);
-            Assert.AreEqual(2017, cars[1].ModelYear);
+            Assert.AreEqual(new DateTime(2017, 1, 1), cars[1].ModelYear);
             Assert.IsFalse(cars[1].IsNew);
             Assert.IsTrue(cars[1].IsSold);
             Assert.IsTrue(cars[1].IsFeatured);
@@ -268,7 +268,7 @@ namespace GuildCars.IntegrationTests
             Assert.AreEqual(3, cars[1].BodyStyleId);
             Assert.AreEqual(1, cars[1].TransmissionId);
             Assert.AreEqual(3, cars[1].MakeId);
-            Assert.AreEqual(1, cars[1].ModelId);
+            Assert.AreEqual(2, cars[1].ModelId);
             Assert.AreEqual(5, cars[1].InteriorColorId);
             Assert.AreEqual(22669.00m, cars[1].SalePrice);
             Assert.AreEqual(24500.00m, cars[1].MSRP);
@@ -281,7 +281,7 @@ namespace GuildCars.IntegrationTests
         {
             Car car = new Car
             {
-                ModelYear = 2015,
+                ModelYear = new DateTime(2015, 1, 1),
                 IsNew = false,
                 IsFeatured = true,
                 IsSold = false,
@@ -332,7 +332,7 @@ namespace GuildCars.IntegrationTests
         {
             Car car = new Car
             {
-                ModelYear = 2015,
+                ModelYear = new DateTime(2015, 1, 1),
                 IsNew = false,
                 IsFeatured = true,
                 IsSold = false,
@@ -372,7 +372,7 @@ namespace GuildCars.IntegrationTests
         {
             Car car = new Car
             {
-                ModelYear = 2015,
+                ModelYear = new DateTime(2015, 1, 1),
                 IsNew = false,
                 IsFeatured = true,
                 IsSold = false,
@@ -406,7 +406,7 @@ namespace GuildCars.IntegrationTests
             car.VIN = "6ABC6ABC6ABC6ABC6";
             car.VehicleDetails = "Updated";
             car.Mileage = "3";
-            car.ModelYear = 2018;
+            car.ModelYear = new DateTime(2018, 1, 1);
             car.MakeId = 2;
             car.ModelId = 3;
             car.TransmissionId = 1;
@@ -429,11 +429,44 @@ namespace GuildCars.IntegrationTests
             Assert.AreEqual(updatedCar.VIN, "6ABC6ABC6ABC6ABC6");
             Assert.AreEqual(updatedCar.VehicleDetails, "Updated");
             Assert.AreEqual(updatedCar.Mileage, "3");
-            Assert.AreEqual(updatedCar.ModelYear, 2018);
+            Assert.AreEqual(updatedCar.ModelYear, new DateTime(2018, 1, 1));
             Assert.AreEqual(updatedCar.MakeId, 2);
             Assert.AreEqual(updatedCar.ModelId, 3);
             Assert.AreEqual(updatedCar.TransmissionId, 1);
             Assert.AreEqual(updatedCar.UnitsInStock, 9);
+        }
+
+        [Test]
+        public void CanSearchForNewCarOnMinYear()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = new DateTime(2017,1,1),
+                MaxYear =  null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017,1,1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
         }
     }
 }

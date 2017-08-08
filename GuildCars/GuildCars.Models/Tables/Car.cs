@@ -15,7 +15,7 @@ namespace GuildCars.Models.Tables
         public int UnitsInStock { get; set; }
         public int MakeId { get; set; }
         public int ModelId { get; set; }
-        public int ModelYear { get; set; }
+        public DateTime ModelYear { get; set; }
         public string IMGFilePath { get; set; }
         public int BodyStyleId { get; set; }
         public int InteriorColorId { get; set; }

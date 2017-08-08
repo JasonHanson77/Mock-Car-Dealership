@@ -62,10 +62,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseLogRepositoryTests\PurchaseLogRepositoryTestsADO.cs" />
     <Compile Include="PurchaseLogRepositoryTests\PurchaseLogRepositoryTestsMock.cs" />
+    <Compile Include="ReportsRepositoryTests\ReportsRepositoryTestsADO.cs" />
+    <Compile Include="ReportsRepositoryTests\ReportsRepositoryTestsMock.cs" />
     <Compile Include="SpecialsRepositoryTests\SpecialsRepositoryTestsADO.cs" />
     <Compile Include="SpecialsRepositoryTests\SpecialsRepositoryTestsMock.cs" />
     <Compile Include="TransmissionRepositoryTests\TransmissionRepositoryTestsADO.cs" />
     <Compile Include="TransmissionRepositoryTests\TransmissionRepositoryTestsMock.cs" />
+    <Compile Include="UserRepositoryTests\UserRepositoryMockTests.cs" />
+    <Compile Include="UserRepositoryTests\UserRepositoryTestsADO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

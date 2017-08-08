@@ -120,7 +120,7 @@ GO
 
 CREATE PROCEDURE CarInsert (
 	@CarId INT OUTPUT,
-	@ModelYear INT,
+	@ModelYear DateTime,
 	@IsNew BIT,
 	@IsFeatured BIT,
 	@IsSold BIT,
@@ -156,7 +156,7 @@ GO
 
 CREATE PROCEDURE CarUpdate (
 	@CarId INT,
-	@ModelYear INT,
+	@ModelYear DATETIME,
 	@IsNew BIT,
 	@IsFeatured BIT,
 	@IsSold BIT,
@@ -557,11 +557,12 @@ GO
 
 CREATE PROCEDURE SpecialInsert (
 	@SpecialId INT OUTPUT,
+	@Title NVARCHAR(100),
 	@SpecialDetails NVARCHAR(400)
 ) AS
 BEGIN
-	INSERT INTO Specials(SpecialDetails)
-	VALUES (@SpecialDetails)
+	INSERT INTO Specials(SpecialDetails, Title)
+	VALUES (@SpecialDetails, @Title)
 
 	SET @SpecialId = SCOPE_IDENTITY();
 END
@@ -583,4 +584,143 @@ END
 
 GO
 
+-- Reports Repository procedures
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectAllSalesReports')
+      DROP PROCEDURE SelectAllSalesReports
+GO
+
+CREATE PROCEDURE SelectAllSalesReports
+AS
+BEGIN
+	SELECT a.UserName As "UserName", a.Id AS "UserId",  SUM(p.PurchasePrice) AS "TotalSales", COUNT(p.SalesPersonId) AS "TotalCarsSold"
+
+	FROM AspNetUsers a
+		INNER JOIN PurchaseLog p ON p.SalesPersonId = a.Id
+		Group By UserName, Id
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectAllInventoryForReport')
+      DROP PROCEDURE SelectAllInventoryForReport
+GO
+
+CREATE PROCEDURE SelectAllInventoryForReport
+AS
+BEGIN
+	SELECT c.ModelYear AS "Year", c.IsNew AS "IsNew", c.MSRP * c.UnitsInStock AS "StockValue", c.UnitsInStock AS "UnitsInStock",
+	mk.MakeName AS "Make", md.ModelName AS "Model"
+	
+	FROM Cars c
+		INNER JOIN Make mk ON mk.MakeId = c.MakeId
+		INNER JOIN Model md ON md.ModelId = c.ModelId
+		Group By ModelYear, IsNew, MakeName, ModelName, MSRP, UnitsInStock
+END
+
+GO
+
+-- User Repository Procedures
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectAllUsers')
+      DROP PROCEDURE SelectAllUsers
+GO
+
+CREATE PROCEDURE SelectAllUsers
+AS
+BEGIN
+	SELECT *
+	FROM AspNetUsers
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectUserById')
+      DROP PROCEDURE SelectUserById
+GO
+
+CREATE PROCEDURE SelectUserById (
+	@UserId NVARCHAR(128)
+) AS
+BEGIN
+	SELECT *
+	FROM AspNetUsers
+	WHERE Id = @UserId
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'UserInsert')
+      DROP PROCEDURE UserInsert
+
+GO
+
+CREATE PROCEDURE UserInsert (
+	@UserId NVARCHAR(128) OUTPUT,
+	@UserName NVARCHAR(256),
+	@UserRole NVARCHAR(MAX),
+	@Email NVARCHAR(256),
+	@EmailConfirmed BIT,
+	@PasswordHash NVARCHAR(MAX),
+	@SecurityStamp NVARCHAR(MAX),
+	@PhoneNumber NVARCHAR(MAX),
+	@PhoneNumberConfirmed BIT,
+	@TwoFactorEnabled BIT,
+	@LockoutEndDateUtc DATETIME,
+	@LockoutEnabled BIT,
+	@AccessFailedCount INT
+) AS
+BEGIN
+	INSERT INTO AspNetUsers(Id, UserName, UserRole, Email, EmailConfirmed, PasswordHash, SecurityStamp,
+	PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount)
+	VALUES (@UserId, @UserName, @UserRole, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp,
+	@PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount)
+
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'UserUpdate')
+      DROP PROCEDURE UserUpdate
+GO
+
+CREATE PROCEDURE UserUpdate (
+	@UserId NVARCHAR(128),
+	@UserName NVARCHAR(256),
+	@UserRole NVARCHAR(MAX),
+	@Email NVARCHAR(256),
+	@EmailConfirmed BIT,
+	@PasswordHash NVARCHAR(MAX),
+	@SecurityStamp NVARCHAR(MAX),
+	@PhoneNumber NVARCHAR(MAX),
+	@PhoneNumberConfirmed BIT,
+	@TwoFactorEnabled BIT,
+	@LockoutEndDateUtc DATETIME,
+	@LockoutEnabled BIT,
+	@AccessFailedCount INT
+) AS
+BEGIN
+	UPDATE AspNetUsers SET 
+		UserName = @UserName,
+		UserRole = @UserRole,
+		Email = @Email,
+		EmailConfirmed = @EmailConfirmed,
+		PasswordHash = @PasswordHash,
+		SecurityStamp = @SecurityStamp,
+		PhoneNumber = @PhoneNumber,
+		PhoneNumberConfirmed = @PhoneNumberConfirmed,
+		TwoFactorEnabled = @TwoFactorEnabled,
+		LockoutEndDateUtc = @LockoutEndDateUtc,
+		LockoutEnabled = @LockoutEnabled,
+		AccessFailedCount =	@AccessFailedCount
+	WHERE Id = @UserId
+END
+
+GO
 

@@ -10,5 +10,6 @@ namespace GuildCars.Models.Tables
     {
         public int SpecialId { get; set; }
         public string SpecialDetails { get; set; }
+        public string Title { get; set; }
     }
 }

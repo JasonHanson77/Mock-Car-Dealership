@@ -48,7 +48,9 @@
     <Compile Include="Interfaces\IMakeRepository.cs" />
     <Compile Include="Interfaces\IModelRepository.cs" />
     <Compile Include="Interfaces\IPurchaseLogRepository.cs" />
+    <Compile Include="Interfaces\IReportsRepository.cs" />
     <Compile Include="Interfaces\ISpecialsRepository.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\ITransmissionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ADO\BodyStyleRepositoryADO.cs" />
@@ -58,8 +60,10 @@
     <Compile Include="Repositories\ADO\PurchaseLogRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\MakeRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\ModelRepositoryADO.cs" />
+    <Compile Include="Repositories\ADO\ReportsRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\SpecialsRepositoryADO.cs" />
     <Compile Include="Repositories\ADO\TransmissionRepositoryADO.cs" />
+    <Compile Include="Repositories\ADO\UserRepositoryADO.cs" />
     <Compile Include="Repositories\Mock\BodyStyleRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\CarRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\ColorRepositoryMock.cs" />
@@ -67,8 +71,10 @@
     <Compile Include="Repositories\Mock\MakeRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\ModelRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\PurchaseLogRepositoryMock.cs" />
+    <Compile Include="Repositories\Mock\ReportsRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\SpecialsRepositoryMock.cs" />
     <Compile Include="Repositories\Mock\TransmissionRepositoryMock.cs" />
+    <Compile Include="Repositories\Mock\UserRepositoryMock.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>

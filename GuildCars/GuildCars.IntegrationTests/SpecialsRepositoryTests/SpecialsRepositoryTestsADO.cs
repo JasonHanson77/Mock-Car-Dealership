@@ -62,6 +62,7 @@ namespace GuildCars.IntegrationTests.SpecialsRepositoryTests
 
             Assert.AreEqual(2, specials[1].SpecialId);
             Assert.AreEqual("Free tank of gas with every purchase!", specials[1].SpecialDetails);
+            Assert.AreEqual("Free tank of gas!", specials[1].Title);
         }
 
         [Test]
@@ -69,7 +70,8 @@ namespace GuildCars.IntegrationTests.SpecialsRepositoryTests
         {
             Special special = new Special
             {
-                SpecialDetails = "Test Special"
+                SpecialDetails = "Test Special",
+                Title = "Test title"
             };
 
             SpecialsRepositoryADO repo = new SpecialsRepositoryADO();
@@ -82,6 +84,7 @@ namespace GuildCars.IntegrationTests.SpecialsRepositoryTests
 
             Assert.AreEqual(5, specials[4].SpecialId);
             Assert.AreEqual("Test Special", specials[4].SpecialDetails);
+            Assert.AreEqual("Test title", specials[4].Title);
         }
 
         [Test]
@@ -89,7 +92,8 @@ namespace GuildCars.IntegrationTests.SpecialsRepositoryTests
         {
             Special special = new Special
             {
-                SpecialDetails = "Test Special"
+                SpecialDetails = "Test Special",
+                Title = "Test title"
             };
 
             SpecialsRepositoryADO repo = new SpecialsRepositoryADO();
@@ -102,6 +106,7 @@ namespace GuildCars.IntegrationTests.SpecialsRepositoryTests
 
             Assert.AreEqual(5, specials[4].SpecialId);
             Assert.AreEqual("Test Special", specials[4].SpecialDetails);
+            Assert.AreEqual("Test title", specials[4].Title);
 
             repo.Delete(5);
 

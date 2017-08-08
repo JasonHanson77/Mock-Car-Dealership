@@ -15,11 +15,13 @@ namespace GuildCars.Data.Repositories.Mock
         private static Special _specialOne = new Special
         {
             SpecialId = 1,
+            Title = "$1000 Rebate Special!",
             SpecialDetails = "$1000 Rebate on all Toyota SUVs!"
         };
 
         private static Special _specialTwo = new Special
         {
+            Title = "Free tank of gas!",
             SpecialId = 2,
             SpecialDetails = "Free tank of gas with every purchase!"
         };
@@ -27,12 +29,14 @@ namespace GuildCars.Data.Repositories.Mock
         
         private static Special _specialThree = new Special
         {
+            Title = "Ford free warranty special!",
             SpecialId = 3,
             SpecialDetails = "Free extended Warranty on all Ford models!"
         };
 
         private static Special _specialFour = new Special
         {
+            Title = "1% Financing!",
             SpecialId = 4,
             SpecialDetails = "1% Financing special all Summer Long!"
         };
