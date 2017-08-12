@@ -468,5 +468,485 @@ namespace GuildCars.IntegrationTests
             Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
             Assert.AreEqual(51815m, searchCarResults[0].MSRP);
         }
+
+        [Test]
+        public void CanSearchForNewCarOnMaxYear()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = new DateTime(2017,1,1),
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForNewCarOnMaxPrice()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = 51000m,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForNewCarOnMinPrice()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = 50000m,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForNewCarSearchTerm()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParametersMake = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = "Toy"
+            };
+
+            CarsSearchParameters searchParametersModel = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = "LX"
+            };
+
+            CarsSearchParameters searchParametersYear = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = "2017"
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParametersMake).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+
+            searchCarResults.Clear();
+
+            searchCarResults = repo.SearchCars(searchParametersModel).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+
+            searchCarResults.Clear();
+
+            searchCarResults = repo.SearchCars(searchParametersYear).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForUsedCarOnMinYear()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = new DateTime(2017, 1, 1),
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Ford", searchCarResults[0].Make);
+            Assert.AreEqual("Escape", searchCarResults[0].Model);
+            Assert.AreEqual("White", searchCarResults[0].BodyColor);
+            Assert.AreEqual("White", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[0].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[0].VIN);
+            Assert.AreEqual("1200", searchCarResults[0].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForUsedCarOnMaxYear()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = new DateTime(2017, 1, 1),
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[1].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[1].Year);
+            Assert.AreEqual("Ford", searchCarResults[1].Make);
+            Assert.AreEqual("Escape", searchCarResults[1].Model);
+            Assert.AreEqual("White", searchCarResults[1].BodyColor);
+            Assert.AreEqual("White", searchCarResults[1].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[1].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[1].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[1].VIN);
+            Assert.AreEqual("1200", searchCarResults[1].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[1].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[1].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForUsedCarOnMaxPrice()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = 51000m,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[1].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[1].Year);
+            Assert.AreEqual("Ford", searchCarResults[1].Make);
+            Assert.AreEqual("Escape", searchCarResults[1].Model);
+            Assert.AreEqual("White", searchCarResults[1].BodyColor);
+            Assert.AreEqual("White", searchCarResults[1].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[1].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[1].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[1].VIN);
+            Assert.AreEqual("1200", searchCarResults[1].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[1].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[1].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForUsedCarOnMinPrice()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = 4000m,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[1].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[1].Year);
+            Assert.AreEqual("Ford", searchCarResults[1].Make);
+            Assert.AreEqual("Escape", searchCarResults[1].Model);
+            Assert.AreEqual("White", searchCarResults[1].BodyColor);
+            Assert.AreEqual("White", searchCarResults[1].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[1].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[1].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[1].VIN);
+            Assert.AreEqual("1200", searchCarResults[1].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[1].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[1].MSRP);
+        }
+
+        [Test]
+        public void CanSearchForUsedCarSearchTerm()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParametersMake = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = "For"
+            };
+
+            CarsSearchParameters searchParametersModel = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = "Esc"
+            };
+
+            CarsSearchParameters searchParametersYear = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = "2017"
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParametersMake).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Ford", searchCarResults[0].Make);
+            Assert.AreEqual("Escape", searchCarResults[0].Model);
+            Assert.AreEqual("White", searchCarResults[0].BodyColor);
+            Assert.AreEqual("White", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[0].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[0].VIN);
+            Assert.AreEqual("1200", searchCarResults[0].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[0].MSRP);
+
+            searchCarResults.Clear();
+
+            searchCarResults = repo.SearchCars(searchParametersModel).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Ford", searchCarResults[0].Make);
+            Assert.AreEqual("Escape", searchCarResults[0].Model);
+            Assert.AreEqual("White", searchCarResults[0].BodyColor);
+            Assert.AreEqual("White", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[0].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[0].VIN);
+            Assert.AreEqual("1200", searchCarResults[0].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[0].MSRP);
+
+            searchCarResults.Clear();
+
+            searchCarResults = repo.SearchCars(searchParametersYear).ToList();
+
+            Assert.AreEqual(1, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Ford", searchCarResults[0].Make);
+            Assert.AreEqual("Escape", searchCarResults[0].Model);
+            Assert.AreEqual("White", searchCarResults[0].BodyColor);
+            Assert.AreEqual("White", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[0].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[0].VIN);
+            Assert.AreEqual("1200", searchCarResults[0].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanReturnNewCarsWithoutParameters()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = true,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(1, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Toyota", searchCarResults[0].Make);
+            Assert.AreEqual("Tundra LX", searchCarResults[0].Model);
+            Assert.AreEqual("Black", searchCarResults[0].BodyColor);
+            Assert.AreEqual("Black", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017ToyotaTundra1794.jpg", searchCarResults[0].IMGURL);
+            Assert.AreEqual("1ABC1ABC1ABC1ABC1", searchCarResults[0].VIN);
+            Assert.AreEqual("0", searchCarResults[0].Mileage);
+            Assert.AreEqual(50315m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(51815m, searchCarResults[0].MSRP);
+        }
+
+        [Test]
+        public void CanReturnUsedCarsWithoutParameters()
+        {
+            CarsRepositoryADO repo = new CarsRepositoryADO();
+
+            CarsSearchParameters searchParameters = new CarsSearchParameters
+            {
+                IsNew = false,
+                MinYear = null,
+                MaxYear = null,
+                MaxPrice = null,
+                MinPrice = null,
+                SearchTerm = null
+            };
+
+            List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
+
+            Assert.AreEqual(2, searchCarResults.Count);
+
+            Assert.AreEqual(3, searchCarResults[0].CarId);
+            Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
+            Assert.AreEqual("Ford", searchCarResults[0].Make);
+            Assert.AreEqual("Escape", searchCarResults[0].Model);
+            Assert.AreEqual("White", searchCarResults[0].BodyColor);
+            Assert.AreEqual("White", searchCarResults[0].InteriorColor);
+            Assert.AreEqual("Automatic", searchCarResults[0].Transmission);
+            Assert.AreEqual("Images\\2017FordEscape.png", searchCarResults[0].IMGURL);
+            Assert.AreEqual("3ABC3ABC3ABC3ABC3", searchCarResults[0].VIN);
+            Assert.AreEqual("1200", searchCarResults[0].Mileage);
+            Assert.AreEqual(22669m, searchCarResults[0].SalePrice);
+            Assert.AreEqual(24500m, searchCarResults[0].MSRP);
+        }
     }
 }
+

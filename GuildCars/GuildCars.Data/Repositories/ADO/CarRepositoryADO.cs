@@ -138,7 +138,7 @@ namespace GuildCars.Data.Repositories.ADO
                             featuredCar.ModelId = (int)dr["ModelId"];
                             featuredCar.Make = dr["MakeName"].ToString();
                             featuredCar.Model = dr["ModelName"].ToString();
-                            featuredCar.Year = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"])); 
+                            featuredCar.Year = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
                             featuredCar.Price = (decimal)dr["SalePrice"];
 
                             featuredCars.Add(featuredCar);
@@ -166,7 +166,7 @@ namespace GuildCars.Data.Repositories.ADO
             }
         }
 
-            public IEnumerable<Car> GetAllNewCars()
+        public IEnumerable<Car> GetAllNewCars()
         {
             List<Car> cars = new List<Car>();
 
@@ -605,17 +605,16 @@ namespace GuildCars.Data.Repositories.ADO
                     + "c.Mileage AS \"Mileage\", c.VIN AS \"VIN\", c.SalePrice AS \"SalePrice\", c.MSRP AS \"MSRP\"" +
                     "FROM Cars c INNER JOIN Make mk ON mk.MakeId = c.MakeId INNER JOIN Model md ON md.MakeId = mk.MakeId INNER JOIN " +
                     "Color bc ON c.BodyColorId = bc.ColorId INNER JOIN Color ic ON ic.ColorId = c.InteriorColorId  INNER JOIN " +
-                    "Transmission t ON t.TransmissionId = c.TransmissionId WHERE 1 = 1";
+                    "Transmission t ON t.TransmissionId = c.TransmissionId WHERE 1 = 1 ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dbConnection;
 
-                query += "AND IsNew = @IsNew ";
                 cmd.Parameters.AddWithValue("@IsNew", Parameters.IsNew);
 
                 if (Parameters.MinYear.HasValue)
                 {
-                    query += "AND ModelYear >= @MinYear ";
+                    query += "AND ModelYear >= @MinYear AND IsNew = @IsNew ";
                     cmd.Parameters.AddWithValue("@MinYear", Parameters.MinYear.Value);
 
                     parametersChosen = true;
@@ -623,7 +622,7 @@ namespace GuildCars.Data.Repositories.ADO
 
                 if (Parameters.MaxYear.HasValue)
                 {
-                    query += "AND ModelYear <= @MaxYear ";
+                    query += "AND ModelYear <= @MaxYear AND IsNew = @IsNew  ";
                     cmd.Parameters.AddWithValue("@MaxYear", Parameters.MaxYear.Value);
 
                     parametersChosen = true;
@@ -631,7 +630,7 @@ namespace GuildCars.Data.Repositories.ADO
 
                 if (Parameters.MinPrice.HasValue)
                 {
-                    query += "AND SalePrice <= @MinPrice ";
+                    query += "AND SalePrice >= @MinPrice AND IsNew = @IsNew ";
                     cmd.Parameters.AddWithValue("@MinPrice", Parameters.MinPrice.Value);
 
                     parametersChosen = true;
@@ -639,15 +638,15 @@ namespace GuildCars.Data.Repositories.ADO
 
                 if (Parameters.MaxPrice.HasValue)
                 {
-                    query += "AND SalePrice <= @MaxPrice ";
-                    cmd.Parameters.AddWithValue("@MaxPrice", Parameters.MaxYear.Value);
+                    query += "AND SalePrice <= @MaxPrice AND IsNew = @IsNew ";
+                    cmd.Parameters.AddWithValue("@MaxPrice", Parameters.MaxPrice.Value);
 
                     parametersChosen = true;
                 }
 
                 if (!string.IsNullOrEmpty(Parameters.SearchTerm))
                 {
-                    query += "AND MakeName LIKE @SearchTerm OR ModelName LIKE @SearchTerm OR ModelYear LIKE @SearchTerm ";
+                    query += "AND (MakeName LIKE @SearchTerm AND IsNew = @IsNew) OR (ModelName LIKE @SearchTerm AND IsNew = @IsNew) OR (ModelYear LIKE @SearchTerm AND IsNew = @IsNew) ";
                     cmd.Parameters.AddWithValue("@SearchTerm", Parameters.SearchTerm + '%');
 
                     parametersChosen = true;
@@ -656,18 +655,19 @@ namespace GuildCars.Data.Repositories.ADO
                 if (parametersChosen)
                 {
                     query += "GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
-                            "Mileage, VIN, SalePrice, MSRP ";
+                            "Mileage, VIN, SalePrice, MSRP Order by ModelYear ";
                     cmd.CommandText = query;
                 }
                 else
                 {
-                    query += "GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
-                            "Mileage, VIN, SalePrice, MSRP  ORDER BY MSRP DESC ";
+                    query += "AND IsNew = @IsNew GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
+                            "Mileage, VIN, SalePrice, MSRP ORDER BY MSRP DESC ";
                     cmd.CommandText = query;
                 }
 
                 dbConnection.Open();
-                try {
+                try
+                {
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
