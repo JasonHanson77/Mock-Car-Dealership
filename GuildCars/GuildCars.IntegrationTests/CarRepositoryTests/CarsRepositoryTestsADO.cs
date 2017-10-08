@@ -124,7 +124,7 @@ namespace GuildCars.IntegrationTests
             CarsRepositoryADO repo = new CarsRepositoryADO();
             List<Car> cars = repo.GetAllCars().ToList();
 
-            Assert.AreEqual(4, cars.Count);
+            Assert.AreEqual(10, cars.Count);
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", cars[1].VIN);
             Assert.AreEqual(2, cars[1].CarId);
@@ -152,7 +152,7 @@ namespace GuildCars.IntegrationTests
             CarsRepositoryADO repo = new CarsRepositoryADO();
             List<FeaturedShortListItem> featuredCars = repo.GetAllFeaturedCars().ToList();
 
-            Assert.AreEqual(2, featuredCars.Count);
+            Assert.AreEqual(8, featuredCars.Count);
 
             Assert.AreEqual(2, featuredCars[0].CarId);
             Assert.AreEqual(new DateTime(2018, 1, 1), featuredCars[0].Year);
@@ -170,7 +170,7 @@ namespace GuildCars.IntegrationTests
             CarsRepositoryADO repo = new CarsRepositoryADO();
             List<Car> cars = repo.GetAllNewCars().ToList();
 
-            Assert.AreEqual(2, cars.Count);
+            Assert.AreEqual(5, cars.Count);
 
             Assert.AreEqual("2ABC2ABC2ABC2ABC2", cars[1].VIN);
             Assert.AreEqual(2, cars[1].CarId);
@@ -198,7 +198,7 @@ namespace GuildCars.IntegrationTests
             CarsRepositoryADO repo = new CarsRepositoryADO();
             List<Car> cars = repo.GetAllUsedCars().ToList();
 
-            Assert.AreEqual(2, cars.Count);
+            Assert.AreEqual(5, cars.Count);
 
             Assert.AreEqual("4ABC4ABC4ABC4ABC4", cars[1].VIN);
             Assert.AreEqual(4, cars[1].CarId);
@@ -226,7 +226,7 @@ namespace GuildCars.IntegrationTests
             CarsRepositoryADO repo = new CarsRepositoryADO();
             List<Car> cars = repo.GetAllUnsoldCars().ToList();
 
-            Assert.AreEqual(2, cars.Count);
+            Assert.AreEqual(8, cars.Count);
 
             Assert.AreEqual("4ABC4ABC4ABC4ABC4", cars[1].VIN);
             Assert.AreEqual(4, cars[1].CarId);
@@ -304,26 +304,26 @@ namespace GuildCars.IntegrationTests
             repo.Insert(car);
 
             List<Car> cars = repo.GetAllCars().ToList();
-            Assert.AreEqual(5, cars.Count);
+            Assert.AreEqual(11, cars.Count);
 
-            Assert.AreEqual(5, cars[4].CarId);
-            Assert.AreEqual(car.ModelYear, cars[4].ModelYear);
-            Assert.AreEqual(car.IsNew, cars[4].IsNew);
-            Assert.AreEqual(car.IsFeatured, cars[4].IsFeatured);
-            Assert.AreEqual(car.IsSold, cars[4].IsSold);
-            Assert.AreEqual(car.UnitsInStock, cars[4].UnitsInStock);
-            Assert.AreEqual(car.Mileage, cars[4].Mileage);
-            Assert.AreEqual(car.VIN, cars[4].VIN);
-            Assert.AreEqual(car.BodyColorId, cars[4].BodyColorId);
-            Assert.AreEqual(car.BodyStyleId, cars[4].BodyStyleId);
-            Assert.AreEqual(car.TransmissionId, cars[4].TransmissionId);
-            Assert.AreEqual(car.MakeId, cars[4].MakeId);
-            Assert.AreEqual(car.ModelId, cars[4].ModelId);
-            Assert.AreEqual(car.InteriorColorId, cars[4].InteriorColorId);
-            Assert.AreEqual(car.SalePrice, cars[4].SalePrice);
-            Assert.AreEqual(car.MSRP, cars[4].MSRP);
-            Assert.AreEqual(car.IMGFilePath, cars[4].IMGFilePath);
-            Assert.AreEqual(car.VehicleDetails, cars[4].VehicleDetails);
+            Assert.AreEqual(11, cars[10].CarId);
+            Assert.AreEqual(car.ModelYear, cars[10].ModelYear);
+            Assert.AreEqual(car.IsNew, cars[10].IsNew);
+            Assert.AreEqual(car.IsFeatured, cars[10].IsFeatured);
+            Assert.AreEqual(car.IsSold, cars[10].IsSold);
+            Assert.AreEqual(car.UnitsInStock, cars[10].UnitsInStock);
+            Assert.AreEqual(car.Mileage, cars[10].Mileage);
+            Assert.AreEqual(car.VIN, cars[10].VIN);
+            Assert.AreEqual(car.BodyColorId, cars[10].BodyColorId);
+            Assert.AreEqual(car.BodyStyleId, cars[10].BodyStyleId);
+            Assert.AreEqual(car.TransmissionId, cars[10].TransmissionId);
+            Assert.AreEqual(car.MakeId, cars[10].MakeId);
+            Assert.AreEqual(car.ModelId, cars[10].ModelId);
+            Assert.AreEqual(car.InteriorColorId, cars[10].InteriorColorId);
+            Assert.AreEqual(car.SalePrice, cars[10].SalePrice);
+            Assert.AreEqual(car.MSRP, cars[10].MSRP);
+            Assert.AreEqual(car.IMGFilePath, cars[10].IMGFilePath);
+            Assert.AreEqual(car.VehicleDetails, cars[10].VehicleDetails);
 
         }
 
@@ -355,13 +355,13 @@ namespace GuildCars.IntegrationTests
 
             repo.Insert(car);
 
-            var newCar = repo.GetCarById(5);
+            var newCar = repo.GetCarById(11);
 
             Assert.IsNotNull(newCar);
 
-            repo.Delete(5);
+            repo.Delete(11);
 
-            newCar = repo.GetCarById(5);
+            newCar = repo.GetCarById(11);
 
             Assert.IsNull(newCar);
 
@@ -415,7 +415,7 @@ namespace GuildCars.IntegrationTests
 
             repo.Update(car);
 
-            var updatedCar = repo.GetCarById(5);
+            var updatedCar = repo.GetCarById(11);
 
             Assert.AreEqual(updatedCar.BodyStyleId, 2);
             Assert.AreEqual(updatedCar.BodyColorId, 2);
@@ -453,7 +453,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(1, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017,1,1), searchCarResults[0].Year);
@@ -486,7 +486,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(1, searchCarResults.Count);
+            Assert.AreEqual(4, searchCarResults.Count);
 
             Assert.AreEqual(1, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -519,7 +519,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(1, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -590,7 +590,7 @@ namespace GuildCars.IntegrationTests
                 MaxYear = null,
                 MaxPrice = null,
                 MinPrice = null,
-                SearchTerm = "LX"
+                SearchTerm = "Tundra LX"
             };
 
             CarsSearchParameters searchParametersYear = new CarsSearchParameters
@@ -643,7 +643,7 @@ namespace GuildCars.IntegrationTests
 
             searchCarResults = repo.SearchCars(searchParametersYear).ToList();
 
-            Assert.AreEqual(1, searchCarResults.Count);
+            Assert.AreEqual(4, searchCarResults.Count);
 
             Assert.AreEqual(1, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -676,7 +676,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(1, searchCarResults.Count);
+            Assert.AreEqual(4, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -709,7 +709,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[1].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[1].Year);
@@ -742,7 +742,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[1].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[1].Year);
@@ -775,7 +775,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[1].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[1].Year);
@@ -828,7 +828,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParametersMake).ToList();
 
-            Assert.AreEqual(1, searchCarResults.Count);
+            Assert.AreEqual(2, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -847,7 +847,7 @@ namespace GuildCars.IntegrationTests
 
             searchCarResults = repo.SearchCars(searchParametersModel).ToList();
 
-            Assert.AreEqual(1, searchCarResults.Count);
+            Assert.AreEqual(2, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -866,7 +866,7 @@ namespace GuildCars.IntegrationTests
 
             searchCarResults = repo.SearchCars(searchParametersYear).ToList();
 
-            Assert.AreEqual(1, searchCarResults.Count);
+            Assert.AreEqual(4, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -899,7 +899,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(1, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);
@@ -932,7 +932,7 @@ namespace GuildCars.IntegrationTests
 
             List<SearchResultItem> searchCarResults = repo.SearchCars(searchParameters).ToList();
 
-            Assert.AreEqual(2, searchCarResults.Count);
+            Assert.AreEqual(5, searchCarResults.Count);
 
             Assert.AreEqual(3, searchCarResults[0].CarId);
             Assert.AreEqual(new DateTime(2017, 1, 1), searchCarResults[0].Year);

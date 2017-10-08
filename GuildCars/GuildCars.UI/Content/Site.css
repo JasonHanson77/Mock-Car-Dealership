@@ -22,3 +22,36 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*Home Page Specials Carousel*/
+
+.carousel, .item, .active, img {
+    height: 400px;
+    width: 800px;
+    display:block;
+    margin:0 auto;
+}
+
+.carousel-inner {
+    height: 400px;
+}
+
+.specialsLink {
+    height: 20px;
+}
+
+.specialsLink:link {
+    color:white;
+}
+
+.specialsLink:visited {
+    color: white;
+}
+
+.specialsLink:hover {
+    color: gray;
+}
+
+.containter {
+    text-align:center;
+}

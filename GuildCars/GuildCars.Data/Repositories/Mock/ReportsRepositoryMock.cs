@@ -15,7 +15,7 @@ namespace GuildCars.Data.Repositories.Mock
         private static List<InventoryReportListingItem> _inventoryReports = new List<InventoryReportListingItem>();
 
         public PurchaseLogRepositoryMock purchaseRepo = new PurchaseLogRepositoryMock();
-        public CarRepositoryMock carRepo = new CarRepositoryMock();
+        public CarsRepositoryMock carRepo = new CarsRepositoryMock();
         public MakeRepositoryMock makeRepo = new MakeRepositoryMock();
         public ModelRepositoryMock modelRepo = new ModelRepositoryMock();
 

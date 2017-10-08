@@ -13,12 +13,12 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
     [TestFixture]
     public class CarRepositoryTestsMock
     {
-        CarRepositoryMock repo;
+        CarsRepositoryMock repo;
 
         [SetUp]
         public void Init()
         {
-            repo = new CarRepositoryMock();
+            repo = new CarsRepositoryMock();
         }
 
         [TearDown]
@@ -30,7 +30,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetCarById()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             Car car = repo.GetCarById(2);
 
             Assert.IsNotNull(car);
@@ -58,7 +58,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetAllCars()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             List<Car> cars = repo.GetAllCars().ToList();
 
             Assert.AreEqual(4, cars.Count);
@@ -86,7 +86,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetFeaturedCars()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
 
             List<FeaturedShortListItem> featuredCars = repo.GetAllFeaturedCars().ToList();
 
@@ -105,7 +105,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetNewCars()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             List<Car> cars = repo.GetAllNewCars().ToList();
 
             Assert.AreEqual(2, cars.Count);
@@ -133,7 +133,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetUsedCars()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             List<Car> cars = repo.GetAllUsedCars().ToList();
 
             Assert.AreEqual(2, cars.Count);
@@ -161,7 +161,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetUnsoldCars()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             List<Car> cars = repo.GetAllUnsoldCars().ToList();
 
             Assert.AreEqual(2, cars.Count);
@@ -189,7 +189,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
         [Test]
         public void CanGetSoldCars()
         {
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             List<Car> cars = repo.GetAllSoldCars().ToList();
 
             Assert.AreEqual(2, cars.Count);
@@ -238,7 +238,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
                 VehicleDetails = "2015 Ford Escape. Fully Loaded!"
             };
 
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
             repo.Insert(car);
 
             List<Car> cars = repo.GetAllCars().ToList();
@@ -289,7 +289,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
                 VehicleDetails = "2015 Ford Escape. Fully Loaded!"
             };
 
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
 
             repo.Insert(car);
 
@@ -329,7 +329,7 @@ namespace GuildCars.IntegrationTests.CarRepositoryTests
                 VehicleDetails = "2015 Ford Escape. Fully Loaded!"
             };
 
-            CarRepositoryMock repo = new CarRepositoryMock();
+            CarsRepositoryMock repo = new CarsRepositoryMock();
 
             repo.Insert(car);
 

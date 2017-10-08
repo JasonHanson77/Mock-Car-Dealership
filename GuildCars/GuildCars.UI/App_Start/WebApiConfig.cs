@@ -1,7 +1,13 @@
-﻿using System;
+﻿using GuildCars.Data.Interfaces;
+using GuildCars.Data.Repositories.ADO;
+using GuildCars.Data.Repositories.Mock;
+using GuildCustomerContacts.Data.Repositories.ADO;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace GuildCars.UI
 {
@@ -10,6 +16,8 @@ namespace GuildCars.UI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            var corsSettings = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(corsSettings);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

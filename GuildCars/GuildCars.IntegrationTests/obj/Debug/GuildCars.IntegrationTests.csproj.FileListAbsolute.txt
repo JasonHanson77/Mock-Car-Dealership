@@ -1,4 +1,3 @@
-C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\obj\Debug\GuildCars.IntegrationTests.csprojResolveAssemblyReference.cache
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\NUnit3.TestAdapter.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\nunit.engine.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\nunit.engine.api.dll
@@ -11,9 +10,19 @@ C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\G
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\GuildCars.IntegrationTests.pdb
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\GuildCars.Data.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\GuildCars.Models.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Ninject.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Ninject.Web.Common.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\nunit.framework.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\WebActivatorEx.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\GuildCars.Data.pdb
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\GuildCars.Models.pdb
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Ninject.xml
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\Ninject.Web.Common.xml
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\bin\Debug\nunit.framework.xml
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\obj\Debug\GuildCars.IntegrationTests.csprojResolveAssemblyReference.cache
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\obj\Debug\GuildCars.IntegrationTests.dll
 C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.IntegrationTests\obj\Debug\GuildCars.IntegrationTests.pdb

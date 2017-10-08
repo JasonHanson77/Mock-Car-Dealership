@@ -84,9 +84,17 @@ BEGIN
 	VALUES (1, CONVERT(DATE, '1/1/2017'), 'true', 'false', 'true', 3, 0, '1ABC1ABC1ABC1ABC1', 1, 1, 1, 1, 1, 1, 50315.00, 51815.00, 'Images\2017ToyotaTundra1794.jpg', 'Brand New and looks great.' ),
 	(2, CONVERT(DATE, '1/1/2018'), 'true', 'true', 'false', 5, 200, '2ABC2ABC2ABC2ABC2', 2, 2, 2, 2, 3, 3, 33000, 34150, 'Images\2018AcuraTLX.png', 'A silver bullet of power and dependability.' ),
 	(3, CONVERT(DATE, '1/1/2017'), 'false', 'true', 'true', 1, 1200, '3ABC3ABC3ABC3ABC3', 5, 3, 1, 3, 2, 5, 22669, 24500, 'Images\2017FordEscape.png', 'Loaded! Used Price for Brand New Quality.' ),
-	(4, CONVERT(DATE, '1/1/2005'), 'false', 'false', 'false', 1, 111200, '4ABC4ABC4ABC4ABC4', 5, 4, 1, 4, 4, 4, 4000.00, 5000.00, 'Images\2005DodgeGrandCaravan.jpg', 'Certified and ready to take your family anywhere.' )
-
+	(4, CONVERT(DATE, '1/1/2005'), 'false', 'false', 'false', 1, 111200, '4ABC4ABC4ABC4ABC4', 5, 4, 1, 4, 4, 4, 4000.00, 5000.00, 'Images\2005DodgeGrandCaravan.jpg', 'Certified and ready to take your family anywhere.' ),
+	(5, CONVERT(DATE, '1/1/2017'), 'true', 'true', 'false', 5, 0, '5ABC5ABC5ABC5ABC5', 2, 2, 2, 2, 3, 3, 10000, 10000, 'Images\MockNewCarPhoto.jpg', 'New Car Mock Data 5' ),
+	(6, CONVERT(DATE, '1/1/2017'), 'true', 'true', 'false', 1, 0, '6ABC6ABC6ABC6ABC6', 5, 3, 1, 3, 2, 5, 10000, 10000, 'Images\MockNewCarPhoto.jpg', 'New Car Mock Data 6' ),
+	(7, CONVERT(DATE, '1/1/2017'), 'true', 'true', 'false', 1, 0, '7ABC7ABC7ABC7ABC7', 5, 4, 1, 4, 4, 4, 10000, 10000, 'Images\MockNewCarPhoto.jpg', 'New Car Mock Data 7' ),
+	(8, CONVERT(DATE, '1/1/2017'), 'false', 'true', 'false', 5, 0, '8ABC8ABC8ABC8ABC8', 2, 2, 2, 2, 3, 3, 10000, 10000, 'Images\MockUsedCarPhoto.jpg', 'UsedCar Mock Data 8' ),
+	(9, CONVERT(DATE, '1/1/2017'), 'false', 'true', 'false', 1, 0, '9ABC9ABC9ABC9ABC9', 5, 3, 1, 3, 2, 5, 10000, 10000, 'Images\MockUsedCarPhoto.jpg', 'Used Car Mock Data 9' ),
+	(10, CONVERT(DATE, '1/1/2017'), 'false', 'true', 'false', 1, 0, '10ABC10ABC10ABC10ABC10', 5, 4, 1, 4, 4, 4, 10000, 10000, 'Images\MockUsedCarPhoto.jpg', 'Used Car Mock Data 10' )
+	
 	SET IDENTITY_INSERT Cars OFF;
+
+	
 
 	SET IDENTITY_INSERT CustomerContact ON;
 

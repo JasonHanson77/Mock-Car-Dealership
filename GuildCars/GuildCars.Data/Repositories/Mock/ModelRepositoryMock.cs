@@ -1,4 +1,5 @@
-﻿using GuildCars.Models.Tables;
+﻿using GuildCars.Data.Interfaces;
+using GuildCars.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GuildCars.Data.Repositories.Mock
 {
-   public class ModelRepositoryMock
+   public class ModelRepositoryMock : IModelRepository
     {
         private static List<Model> _models = new List<Model>();
 
