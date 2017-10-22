@@ -1,0 +1,77 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    align-content: center;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/*Home Page Specials Carousel*/
+
+.carousel, .item, .active, img {
+    height: 400px;
+    width: 800px;
+    display:block;
+    margin:0 auto;
+}
+
+.carousel-inner {
+    height: 400px;
+}
+
+.specialsLink {
+    height: 20px;
+}
+
+.specialsLink:link {
+    color:white;
+}
+
+.specialsLink:visited {
+    color: white;
+}
+
+.specialsLink:hover {
+    color: gray;
+}
+
+.featuredCarDiv {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    border-style: solid;
+    border-color: black;
+    margin-top: 10px;
+}
+
+.featuredCarDetails {
+    display: block;
+    vertical-align: middle;
+    text-align: center;
+    font-family: Impact;
+}
+
+img.resize {
+    width: 150px; 
+    display: block;
+    height: auto;
+    vertical-align: middle;
+}

@@ -1,0 +1,15 @@
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Data.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Data.pdb
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\CommonServiceLocator.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Models.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\Ninject.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\Ninject.Web.Common.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\WebActivatorEx.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\GuildCars.Models.pdb
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\Ninject.xml
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\bin\Debug\Ninject.Web.Common.xml
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.csprojResolveAssemblyReference.cache
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.dll
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.pdb
+C:\Users\Jason\Desktop\Development\Repos\swcguild\jason-hanson-individual-work\GuildCars\GuildCars\GuildCars.Data\obj\Debug\GuildCars.Data.csproj.CoreCompileInputs.cache
