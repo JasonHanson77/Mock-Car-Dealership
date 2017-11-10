@@ -4,8 +4,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.MakeRepositoryTests
 {
@@ -34,7 +32,7 @@ namespace GuildCars.IntegrationTests.MakeRepositoryTests
 
             List<Make> Makes = repo.GetAll().ToList();
 
-            Assert.AreEqual(4, Makes.Count);
+            Assert.AreEqual(5, Makes.Count);
 
             Assert.AreEqual(Makes[2].MakeId, 3);
             Assert.AreEqual(Makes[2].MakeName, "Ford");
@@ -60,6 +58,7 @@ namespace GuildCars.IntegrationTests.MakeRepositoryTests
             {
                 MakeName = "TestMake",
                 DateAdded = DateTime.Now.Date,
+                AddedBy = "TestUser"
 
             };
 
@@ -67,11 +66,12 @@ namespace GuildCars.IntegrationTests.MakeRepositoryTests
             repo.Insert(make);
 
             List<Make> makes = repo.GetAll().ToList();
-            Assert.AreEqual(5, makes.Count);
+            Assert.AreEqual(6, makes.Count);
 
-            Assert.AreEqual(5, makes[4].MakeId);
-            Assert.AreEqual(make.MakeName, makes[4].MakeName);
-            Assert.AreEqual(make.DateAdded, makes[4].DateAdded);
+            Assert.AreEqual(6, makes[5].MakeId);
+            Assert.AreEqual(make.MakeName, makes[5].MakeName);
+            Assert.AreEqual(make.DateAdded, makes[5].DateAdded);
+            Assert.AreEqual(make.AddedBy, makes[5].AddedBy);
 
         }
     }

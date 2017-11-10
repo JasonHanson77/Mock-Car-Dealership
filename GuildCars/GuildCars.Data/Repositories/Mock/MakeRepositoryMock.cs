@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuildCars.Models.Tables;
 
 namespace GuildCars.Data.Repositories.Mock
@@ -16,28 +14,44 @@ namespace GuildCars.Data.Repositories.Mock
         {
             MakeId = 1,
             MakeName = "Toyota",
-            DateAdded = new DateTime(2017,7,19)
+            DateAdded = new DateTime(2017, 7, 19),
+            AddedBy = "admin3@test.com"
         };
 
         private static Make Acura = new Make
         {
             MakeId = 2,
             MakeName = "Acura",
-            DateAdded = new DateTime(2017, 7, 2)
+            DateAdded = new DateTime(2017, 7, 2),
+            AddedBy = "admin3@test.com"
+
         };
 
         private static Make Ford = new Make
         {
             MakeId = 3,
             MakeName = "Ford",
-            DateAdded = new DateTime(2015, 6, 2)
+            DateAdded = new DateTime(2015, 6, 2),
+            AddedBy = "admin3@test.com"
+
         };
 
         private static Make Dodge = new Make
         {
             MakeId = 4,
             MakeName = "Dodge",
-            DateAdded = new DateTime(2009, 5, 1)
+            DateAdded = new DateTime(2009, 5, 1),
+            AddedBy = "admin3@test.com"
+
+        };
+
+        private static Make Mock = new Make
+        {
+            MakeId = 5,
+            MakeName = "Mock",
+            DateAdded = new DateTime(2009, 5, 1),
+            AddedBy = "admin3@test.com"
+
         };
 
         public MakeRepositoryMock()
@@ -48,6 +62,7 @@ namespace GuildCars.Data.Repositories.Mock
                 _makes.Add(Acura);
                 _makes.Add(Ford);
                 _makes.Add(Dodge);
+                _makes.Add(Mock);
             }
         }
 

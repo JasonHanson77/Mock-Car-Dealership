@@ -4,8 +4,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 {
@@ -32,7 +30,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
         {
             List<InventoryReportListingItem> inventoryReportsList = repo.GetInventory().ToList();
 
-            Assert.AreEqual(4, inventoryReportsList.Count);
+            Assert.AreEqual(10, inventoryReportsList.Count);
 
             Assert.IsTrue(inventoryReportsList[0].IsNew);
             Assert.AreEqual("Toyota", inventoryReportsList[0].Make);

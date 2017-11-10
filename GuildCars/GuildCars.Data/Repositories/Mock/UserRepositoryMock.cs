@@ -1,10 +1,7 @@
 ﻿using GuildCars.Data.Interfaces;
 using GuildCars.Models.Tables;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.Data.Repositories.Mock
 {
@@ -21,7 +18,9 @@ namespace GuildCars.Data.Repositories.Mock
             TwoFactorEnabled = false,
             LockoutEnabled = false,
             AccessFailedCount = 0,
-            UserName = "Sales Test User 1"
+            UserName = "Sales Test User 1",
+            FirstName = "Bob",
+            LastName = "Smithee"
         };
 
         private static User _salesUserTwo = new User
@@ -33,7 +32,10 @@ namespace GuildCars.Data.Repositories.Mock
             TwoFactorEnabled = false,
             LockoutEnabled = false,
             AccessFailedCount = 0,
-            UserName = "Sales Test User 2"
+            UserName = "Sales Test User 2",
+            FirstName = "Nancy",
+            LastName = "Doof"
+
         };
 
         private static User _adminUserOne = new User
@@ -45,7 +47,10 @@ namespace GuildCars.Data.Repositories.Mock
             TwoFactorEnabled = false,
             LockoutEnabled = false,
             AccessFailedCount = 0,
-            UserName = "Admin Test User 1"
+            UserName = "Admin Test User 1",
+            FirstName = "Administrate",
+            LastName = "This"
+
         };
 
         private static User _adminUserTwo = new User
@@ -57,7 +62,9 @@ namespace GuildCars.Data.Repositories.Mock
             TwoFactorEnabled = false,
             LockoutEnabled = false,
             AccessFailedCount = 0,
-            UserName = "Admin Test User 2"
+            UserName = "Admin Test User 2",
+            FirstName = "Mocking",
+            LastName = "Waste Of Time"
         };
 
         public UserRepositoryMock()
@@ -102,6 +109,11 @@ namespace GuildCars.Data.Repositories.Mock
             _users.RemoveAt(index);
 
             _users.Insert(index, user);
+        }
+
+        public User GetUserByUserName(string UserName)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

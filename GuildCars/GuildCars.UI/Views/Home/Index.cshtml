@@ -16,7 +16,7 @@
 
             <ol class="carousel-indicators">
                 @foreach (var special in specials)
-            {
+                {
                     <li data-target="#specialsCarousel" data-slide-to="@iterations" class="@activeSlide"></li>
                     iterations++;
                 }
@@ -34,8 +34,8 @@
                     <div class="item @active">
                         <img src="\Images\black.JPG" height="200">
                         <span class="carousel-caption">
-                            <h1><a href="#" class="specialsLink">@special.Title</a></h1>
-                            <span class="lead"><a href="#" class="specialsLink">@special.SpecialDetails</a></span>
+                            <a href="Home\Specials\" class="specialsLink">@special.Title</a><br />
+                            <span class="lead"><a href="Home\Specials\" class="specialsLink">@special.SpecialDetails</a></span>
                         </span>
                     </div>
                     iterations++;
@@ -56,24 +56,64 @@
     <!-- /.carousel -->
 
     <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </div>
+        @{
+            var colCounter = 1;
+            var featuredCars = Model.FeaturedCars.ToList();
+            var carCount = featuredCars.Count();
+            var colWidth = 0;
+
+            if (carCount < 4)
+            {
+                if (carCount == 3)
+                {
+                    colWidth = 4;
+                }
+                else if
+                 (carCount == 2)
+                {
+                    colWidth = 6;
+                }
+                else
+                {
+                    colWidth = 12;
+                }
+            }
+            else
+            {
+                colWidth = 3;
+            }
+
+            foreach (var car in featuredCars)
+            {
+                if (colCounter % 4 == 0)
+                {
+                    <div class="row">
+                        <div class="col-md-@colWidth">
+                            <div class="featuredCarDiv">
+                                <a onclick="getDetails(@car.CarId)">
+                                    <img class="resize" src="@car.ImageURL" />
+                                    <div class="featuredCarDetails">@car.Year.Year @car.Make @car.Model</div>
+                                    <div class="featuredCarDetails">$@car.Price</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-@colWidth">
+                        <div class="featuredCarDiv">
+                            <a onclick="getDetails(@car.CarId)">
+                                <img class="resize" src="@car.ImageURL" />
+                                <div class="featuredCarDetails">@car.Year.Year @car.Make @car.Model</div>
+                                <div class="featuredCarDetails">$@car.Price</div>
+                            </a>
+                        </div>
+                    </div>
+                }
+                colCounter++;
+            }
+        }
     </div>
 </div>
+

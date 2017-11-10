@@ -7,8 +7,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.UserRepositoryTests
 {
@@ -100,11 +98,11 @@ namespace GuildCars.IntegrationTests.UserRepositoryTests
 
             Assert.AreEqual("00000000-0000-0000-0000-000000000000", users[0].Id);
             Assert.AreEqual("Disabled", users[0].UserRole);
-            Assert.AreEqual("Sales Test User 1", users[0].UserName);
+            Assert.AreEqual("sales1@test.com", users[0].UserName);
             Assert.AreEqual("sales1@test.com", users[0].Email);
             Assert.IsTrue(string.IsNullOrEmpty(users[0].PhoneNumber));
-            Assert.IsTrue(string.IsNullOrEmpty(users[0].PasswordHash));
-            Assert.IsTrue(string.IsNullOrEmpty(users[0].SecurityStamp));
+            Assert.IsFalse(string.IsNullOrEmpty(users[0].PasswordHash));
+            Assert.IsFalse(string.IsNullOrEmpty(users[0].SecurityStamp));
             Assert.IsFalse(users[0].EmailConfirmed);
             Assert.IsFalse(users[0].PhoneNumberConfirmed);
             Assert.IsFalse(users[0].TwoFactorEnabled);
@@ -123,11 +121,11 @@ namespace GuildCars.IntegrationTests.UserRepositoryTests
 
             Assert.AreEqual("00000000-0000-0000-0000-000000000000", user.Id);
             Assert.AreEqual("Disabled", user.UserRole);
-            Assert.AreEqual("Sales Test User 1", user.UserName);
+            Assert.AreEqual("sales1@test.com", user.UserName);
             Assert.AreEqual("sales1@test.com", user.Email);
             Assert.IsTrue(string.IsNullOrEmpty(user.PhoneNumber));
-            Assert.IsTrue(string.IsNullOrEmpty(user.PasswordHash));
-            Assert.IsTrue(string.IsNullOrEmpty(user.SecurityStamp));
+            Assert.IsFalse(string.IsNullOrEmpty(user.PasswordHash));
+            Assert.IsFalse(string.IsNullOrEmpty(user.SecurityStamp));
             Assert.IsFalse(user.EmailConfirmed);
             Assert.IsFalse(user.PhoneNumberConfirmed);
             Assert.IsFalse(user.TwoFactorEnabled);

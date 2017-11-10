@@ -1,5 +1,4 @@
 ﻿using GuildCars.Data.Repositories.ADO;
-using GuildCars.Data.Repositories.Mock;
 using GuildCars.Models.Tables;
 using NUnit.Framework;
 using System;
@@ -8,8 +7,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.ModelRepositoryTests
 {
@@ -60,7 +57,7 @@ namespace GuildCars.IntegrationTests.ModelRepositoryTests
 
             List<Model> Models = repo.GetAll().ToList();
 
-            Assert.AreEqual(4, Models.Count);
+            Assert.AreEqual(5, Models.Count);
 
             Assert.AreEqual(Models[2].ModelId, 3);
             Assert.AreEqual(Models[2].ModelName, "TLX");
@@ -72,11 +69,25 @@ namespace GuildCars.IntegrationTests.ModelRepositoryTests
         {
             ModelRepositoryADO repo = new ModelRepositoryADO();
 
-            Model Model = repo.GetAll().FirstOrDefault(c => c.ModelId == 3);
+            Model Model = repo.GetModelById(3);
 
             Assert.AreEqual(Model.ModelId, 3);
             Assert.AreEqual(Model.ModelName, "TLX");
             Assert.AreEqual(Model.DateAdded, new DateTime(2017, 7, 2));
+        }
+
+        [Test]
+        public void CanGetModelByMakeId()
+        {
+            ModelRepositoryADO repo = new ModelRepositoryADO();
+
+            List<Model> models = new List<Model>();
+
+            models = repo.GetModelsByMakeId(2);
+
+            Assert.AreEqual(models[0].ModelId, 3);
+            Assert.AreEqual(models[0].ModelName, "TLX");
+            Assert.AreEqual(models[0].DateAdded, new DateTime(2017, 7, 2));
         }
 
         [Test]
@@ -87,20 +98,20 @@ namespace GuildCars.IntegrationTests.ModelRepositoryTests
                 MakeId = 2,
                 ModelName = "TestModel",
                 DateAdded = DateTime.Now.Date,
-
+                Addedby = "admin3@test.com"
             };
 
             ModelRepositoryADO repo = new ModelRepositoryADO();
             repo.Insert(model);
 
             List<Model> Models = repo.GetAll().ToList();
-            Assert.AreEqual(5, Models.Count);
+            Assert.AreEqual(6, Models.Count);
 
-            Assert.AreEqual(5, Models[4].ModelId);
-            Assert.AreEqual(2, Models[4].MakeId);
-            Assert.AreEqual(model.ModelName, Models[4].ModelName);
-            Assert.AreEqual(model.DateAdded, Models[4].DateAdded);
-
+            Assert.AreEqual(6, Models[5].ModelId);
+            Assert.AreEqual(2, Models[5].MakeId);
+            Assert.AreEqual(model.ModelName, Models[5].ModelName);
+            Assert.AreEqual(model.DateAdded, Models[5].DateAdded);
+            Assert.AreEqual(model.Addedby, Models[5].Addedby);
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using GuildCars.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuildCars.Models.Tables;
 using System.Data.SqlClient;
 using System.Data;
@@ -544,6 +541,14 @@ namespace GuildCars.Data.Repositories.ADO
 
         public void Update(Car Car)
         {
+            if(Car.IsSold == true)
+            {
+                if(Car.UnitsInStock >= 1)
+                {
+                    Car.UnitsInStock--;
+                }
+            }
+
             using (var dbConnection = new SqlConnection(Settings.GetConnectionString()))
             {
                 try
@@ -596,76 +601,88 @@ namespace GuildCars.Data.Repositories.ADO
         public IEnumerable<SearchResultItem> SearchCars(CarsSearchParameters Parameters)
         {
             List<SearchResultItem> carsSearchResults = new List<SearchResultItem>();
-            bool parametersChosen = false;
 
             using (var dbConnection = new SqlConnection(Settings.GetConnectionString()))
             {
-                string query = "SELECT TOP 20 c.CarId AS \"CarId\", c.ModelYear AS \"ModelYear\", mk.MakeName AS \"Make\",  md.ModelName AS \"Model\", c.IMGFilePath AS \"IMGURL\"," +
+                string query = "SELECT TOP 20 c.CarId AS \"CarId\", c.IsSold As \"Sold\", c.ModelYear AS \"ModelYear\", bs.BodyStyleType As \"BodyStyle\", mk.MakeName AS \"Make\",  md.ModelName AS \"Model\", c.IMGFilePath AS \"IMGURL\"," +
                     "ic.ColorName AS \"InteriorColor\", bc.ColorName AS \"BodyColor\", t.TransmissionType AS \"Transmission\","
                     + "c.Mileage AS \"Mileage\", c.VIN AS \"VIN\", c.SalePrice AS \"SalePrice\", c.MSRP AS \"MSRP\"" +
-                    "FROM Cars c INNER JOIN Make mk ON mk.MakeId = c.MakeId INNER JOIN Model md ON md.MakeId = mk.MakeId INNER JOIN " +
+                    "FROM Cars c INNER JOIN Make mk ON mk.MakeId = c.MakeId INNER JOIN BodyStyle bs ON bs.BodyStyleId = c.BodyStyleId INNER JOIN Model md ON md.MakeId = mk.MakeId INNER JOIN " +
                     "Color bc ON c.BodyColorId = bc.ColorId INNER JOIN Color ic ON ic.ColorId = c.InteriorColorId  INNER JOIN " +
                     "Transmission t ON t.TransmissionId = c.TransmissionId WHERE 1 = 1 ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dbConnection;
 
-                cmd.Parameters.AddWithValue("@IsNew", Parameters.IsNew);
+                bool isNewIsNotNull = Parameters.IsNew.HasValue;
 
-                if (Parameters.MinYear.HasValue)
+                if (isNewIsNotNull)
+                {
+                    query += "AND IsNew = @IsNew ";
+                    cmd.Parameters.AddWithValue("@IsNew", Parameters.IsNew);
+                }
+
+                if (Parameters.MinYear.HasValue && isNewIsNotNull)
                 {
                     query += "AND ModelYear >= @MinYear AND IsNew = @IsNew ";
                     cmd.Parameters.AddWithValue("@MinYear", Parameters.MinYear.Value);
-
-                    parametersChosen = true;
+                }
+                else if (Parameters.MinYear.HasValue)
+                {
+                    query += "AND ModelYear >= @MinYear ";
+                    cmd.Parameters.AddWithValue("@MinYear", Parameters.MinYear.Value);
                 }
 
-                if (Parameters.MaxYear.HasValue)
+                if (Parameters.MaxYear.HasValue && isNewIsNotNull)
                 {
                     query += "AND ModelYear <= @MaxYear AND IsNew = @IsNew  ";
                     cmd.Parameters.AddWithValue("@MaxYear", Parameters.MaxYear.Value);
-
-                    parametersChosen = true;
+                }
+                else if (Parameters.MaxYear.HasValue)
+                {
+                    query += "AND ModelYear <= @MaxYear ";
+                    cmd.Parameters.AddWithValue("@MaxYear", Parameters.MaxYear.Value);
                 }
 
-                if (Parameters.MinPrice.HasValue)
+                if (Parameters.MinPrice > 0 && isNewIsNotNull)
                 {
                     query += "AND SalePrice >= @MinPrice AND IsNew = @IsNew ";
                     cmd.Parameters.AddWithValue("@MinPrice", Parameters.MinPrice.Value);
-
-                    parametersChosen = true;
+                }
+                else if (Parameters.MinPrice > 0)
+                {
+                    query += "AND SalePrice >= @MinPrice ";
+                    cmd.Parameters.AddWithValue("@MinPrice ", Parameters.MinPrice.Value);
                 }
 
-                if (Parameters.MaxPrice.HasValue)
+                if (Parameters.MaxPrice > 0 && isNewIsNotNull)
                 {
                     query += "AND SalePrice <= @MaxPrice AND IsNew = @IsNew ";
                     cmd.Parameters.AddWithValue("@MaxPrice", Parameters.MaxPrice.Value);
-
-                    parametersChosen = true;
+                }
+                else if (Parameters.MaxPrice > 0)
+                {
+                    query += "AND SalePrice <= @MaxPrice ";
+                    cmd.Parameters.AddWithValue("@MaxPrice", Parameters.MaxPrice.Value);
                 }
 
-                if (!string.IsNullOrEmpty(Parameters.SearchTerm))
+                if (!string.IsNullOrEmpty(Parameters.SearchTerm) && isNewIsNotNull)
                 {
                     query += "AND (MakeName LIKE @SearchTerm AND IsNew = @IsNew) OR (ModelName LIKE @SearchTerm AND IsNew = @IsNew) OR (ModelYear LIKE @SearchTerm AND IsNew = @IsNew) ";
                     cmd.Parameters.AddWithValue("@SearchTerm", Parameters.SearchTerm + '%');
-
-                    parametersChosen = true;
                 }
-
-                if (parametersChosen)
+                else if (!string.IsNullOrEmpty(Parameters.SearchTerm))
                 {
-                    query += "GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
-                            "Mileage, VIN, SalePrice, MSRP Order by ModelYear ";
-                    cmd.CommandText = query;
+                    query += "AND (MakeName LIKE @SearchTerm) OR (ModelName LIKE @SearchTerm) OR (ModelYear LIKE @SearchTerm) ";
+                    cmd.Parameters.AddWithValue("@SearchTerm", Parameters.SearchTerm + '%');
                 }
-                else
-                {
-                    query += "AND IsNew = @IsNew GROUP BY CarId, MakeName, ModelName, ModelYear, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
-                            "Mileage, VIN, SalePrice, MSRP ORDER BY MSRP DESC ";
-                    cmd.CommandText = query;
-                }
+
+                query += "GROUP BY CarId, MakeName, ModelName, ModelYear, bs.BodyStyleType, IMGFilePath, bc.ColorName, ic.ColorName, TransmissionType, " +
+                        "Mileage, VIN, SalePrice, MSRP, IsSold ORDER BY MSRP DESC";
+                cmd.CommandText = query;
 
                 dbConnection.Open();
+
                 try
                 {
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -675,17 +692,19 @@ namespace GuildCars.Data.Repositories.ADO
                             SearchResultItem carSearchResult = new SearchResultItem();
 
                             carSearchResult.CarId = (int)dr["CarId"];
-                            carSearchResult.Year = (dr["ModelYear"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["ModelYear"]));
+                            carSearchResult.Year = (dr["ModelYear"] == DBNull.Value ? "" : Convert.ToDateTime(dr["ModelYear"]).Year.ToString());
                             carSearchResult.Make = dr["Make"].ToString();
                             carSearchResult.Model = dr["Model"].ToString();
                             carSearchResult.IMGURL = dr["IMGURL"].ToString();
                             carSearchResult.InteriorColor = dr["InteriorColor"].ToString();
                             carSearchResult.BodyColor = dr["BodyColor"].ToString();
                             carSearchResult.Transmission = dr["Transmission"].ToString();
+                            carSearchResult.BodyStyle = dr["BodyStyle"].ToString();
                             carSearchResult.Mileage = dr["Mileage"].ToString();
                             carSearchResult.VIN = dr["VIN"].ToString();
                             carSearchResult.SalePrice = (decimal)dr["SalePrice"];
                             carSearchResult.MSRP = (decimal)dr["MSRP"];
+                            carSearchResult.IsSold = (bool)dr["Sold"];
 
 
                             carsSearchResults.Add(carSearchResult);

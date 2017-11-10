@@ -1,12 +1,4 @@
-﻿using GuildCars.Data.Interfaces;
-using GuildCars.Data.Repositories.ADO;
-using GuildCars.Data.Repositories.Mock;
-using GuildCustomerContacts.Data.Repositories.ADO;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace GuildCars.UI
@@ -23,10 +15,23 @@ namespace GuildCars.UI
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+               name: "InventoryController",
+               routeTemplate: "api/{controller}/{action}/{searchTerm}/{minYear}/{maxYear}/{minPrice}/{maxPrice}",
+               defaults: new
+               {
+                   searchTerm = RouteParameter.Optional,
+                   minYear = RouteParameter.Optional,
+                   maxYear = RouteParameter.Optional,
+                   minPrice = RouteParameter.Optional,
+                   maxPrice = RouteParameter.Optional
+               }
+               );
+
+            config.Routes.MapHttpRoute(
+              name: "DefaultApi",
+              routeTemplate: "api/{controller}/{id}",
+              defaults: new { id = RouteParameter.Optional }
+          );
         }
     }
 }

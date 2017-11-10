@@ -1,9 +1,6 @@
 ﻿using GuildCars.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuildCars.Models.Tables;
 using System.Data.SqlClient;
 using System.Data;
@@ -49,6 +46,72 @@ namespace GuildCars.Data.Repositories.ADO
                             user.UserName = dr["UserName"].ToString();
                             user.SecurityStamp = dr["SecurityStamp"].ToString();
                             user.UserRole = dr["UserRole"].ToString();
+                            user.FirstName = dr["FirstName"].ToString();
+                            user.LastName = dr["LastName"].ToString();
+                        }
+                    }
+
+                    return user;
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = String.Format(CultureInfo.CurrentCulture,
+                              "Exception Type: {0}, Message: {1}{2}",
+                              ex.GetType(),
+                              ex.Message,
+                              ex.InnerException == null ? String.Empty :
+                              String.Format(CultureInfo.CurrentCulture,
+                                           " InnerException Type: {0}, Message: {1}",
+                                           ex.InnerException.GetType(),
+                                           ex.InnerException.Message));
+
+                    System.Diagnostics.Debug.WriteLine(errorMessage);
+
+                    dbConnection.Close();
+                }
+
+                return user;
+            }
+        }
+
+        public User GetUserByUserName(string UserName)
+        {
+            User user = null;
+
+            using (var dbConnection = new SqlConnection(Settings.GetConnectionString()))
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    SqlCommand cmd = new SqlCommand("SelectUserByUserName", dbConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+
+
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            user = new User();
+
+                            user.Id = dr["Id"].ToString();
+                            user.Email = dr["Email"].ToString();
+                            user.EmailConfirmed = dr.GetBoolean(dr.GetOrdinal("EmailConfirmed"));
+                            user.PhoneNumberConfirmed = dr.GetBoolean(dr.GetOrdinal("PhoneNumberConfirmed"));
+                            user.TwoFactorEnabled = dr.GetBoolean(dr.GetOrdinal("TwoFactorEnabled"));
+                            user.AccessFailedCount = (int)dr["AccessFailedCount"];
+                            user.LockoutEnabled = dr.GetBoolean(dr.GetOrdinal("LockoutEnabled"));
+                            user.PasswordHash = dr["PasswordHash"].ToString();
+                            user.PhoneNumber = dr["PhoneNumber"].ToString();
+                            user.LockoutEndDateUtc = (dr["LockoutEndDateUtc"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["LockoutEndDateUtc"]));
+                            user.UserName = dr["UserName"].ToString();
+                            user.SecurityStamp = dr["SecurityStamp"].ToString();
+                            user.UserRole = dr["UserRole"].ToString();
+                            user.FirstName = dr["FirstName"].ToString();
+                            user.LastName = dr["LastName"].ToString();
                         }
                     }
 
@@ -107,7 +170,8 @@ namespace GuildCars.Data.Repositories.ADO
                             user.UserName = dr["UserName"].ToString();
                             user.SecurityStamp = dr["SecurityStamp"].ToString();
                             user.UserRole = dr["UserRole"].ToString();
-
+                            user.FirstName = dr["FirstName"].ToString();
+                            user.LastName = dr["LastName"].ToString();
 
                             users.Add(user);
                         }
@@ -161,6 +225,23 @@ namespace GuildCars.Data.Repositories.ADO
                         cmd.Parameters.AddWithValue("@UserRole", user.UserRole);
                     }
 
+                    if (user.FirstName == null)
+                    {
+                        cmd.Parameters.AddWithValue("@FirstName", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+                    }
+
+                    if (user.LastName == null)
+                    {
+                        cmd.Parameters.AddWithValue("@LastName", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@LastName", user.LastName);
+                    }
 
                     if (user.LockoutEndDateUtc == null)
                     {
@@ -269,6 +350,24 @@ namespace GuildCars.Data.Repositories.ADO
                     else
                     {
                         cmd.Parameters.AddWithValue("@LockoutEndDateUtc", user.LockoutEndDateUtc);
+                    }
+
+                    if (user.FirstName == null)
+                    {
+                        cmd.Parameters.AddWithValue("@FirstName", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+                    }
+
+                    if (user.LastName == null)
+                    {
+                        cmd.Parameters.AddWithValue("@LastName", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@LastName", user.LastName);
                     }
 
                     cmd.Parameters.AddWithValue("@LockoutEnabled", user.LockoutEnabled);

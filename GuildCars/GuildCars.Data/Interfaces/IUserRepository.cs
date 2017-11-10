@@ -1,9 +1,5 @@
 ﻿using GuildCars.Models.Tables;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.Data.Interfaces
 {
@@ -11,6 +7,7 @@ namespace GuildCars.Data.Interfaces
     {
         IEnumerable<User> GetUsers();
         User GetUserById(string UserId);
+        User GetUserByUserName(string UserName);
 
         void Insert(User user);
         void Update(User user);

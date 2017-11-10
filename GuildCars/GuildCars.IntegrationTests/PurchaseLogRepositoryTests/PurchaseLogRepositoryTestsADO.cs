@@ -7,8 +7,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
 {
@@ -63,7 +61,7 @@ namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
 
             Assert.AreEqual("Purchaser One", purchaseLogs[0].PurchaseName);
             Assert.AreEqual(1, purchaseLogs[0].PurchaseLogId);
-            Assert.AreEqual("00000000-0000-0000-0000-000000000000", purchaseLogs[0].SalesPersonId);
+            Assert.AreEqual("sales1@test.com", purchaseLogs[0].SalesPersonId);
             Assert.AreEqual("Hampton", purchaseLogs[0].City);
             Assert.AreEqual("123 Main Street", purchaseLogs[0].AddressOne);
             Assert.IsTrue(String.IsNullOrEmpty(purchaseLogs[0].AddressTwo));
@@ -86,7 +84,7 @@ namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
                 PurchasePrice = 12000.00m,
                 CarId = 2,
                 DateSold = new DateTime(2014, 1, 1),
-                SalesPersonId = "11111111-1111-1111-1111-111111111111",
+                SalesPersonId = "sales2@test.com",
                 AddressOne = "106 Test Road",
                 City = "Gloucester",
                 ZipCode = "23072",
@@ -104,7 +102,7 @@ namespace GuildCars.IntegrationTests.PurchaseLogRepositoryTests
 
             Assert.AreEqual("Purchaser Five", purchaseLogs[4].PurchaseName);
             Assert.AreEqual(5, purchaseLogs[4].PurchaseLogId);
-            Assert.AreEqual("11111111-1111-1111-1111-111111111111", purchaseLogs[4].SalesPersonId);
+            Assert.AreEqual("sales2@test.com", purchaseLogs[4].SalesPersonId);
             Assert.AreEqual("Gloucester", purchaseLogs[4].City);
             Assert.AreEqual("106 Test Road", purchaseLogs[4].AddressOne);
             Assert.IsTrue(String.IsNullOrEmpty(purchaseLogs[4].AddressTwo));

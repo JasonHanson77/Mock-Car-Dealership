@@ -1,9 +1,6 @@
 ﻿using GuildCars.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuildCars.Models.Queries;
 using System.Data.SqlClient;
 using System.Data;
@@ -120,7 +117,7 @@ namespace GuildCars.Data.Repositories.ADO
             using (var dbConnection = new SqlConnection(Settings.GetConnectionString()))
             {
                 string query = "SELECT a.UserName As \"UserName\", a.Id AS \"UserId\",  SUM(p.PurchasePrice) AS \"TotalSales\", COUNT(p.SalesPersonId) AS \"TotalCarsSold\" " +
-                    "FROM PurchaseLog p INNER JOIN AspNetUsers a ON a.Id = p.SalesPersonId WHERE 1 = 1 ";
+                    "FROM PurchaseLog p INNER JOIN AspNetUsers a ON a.UserName = p.SalesPersonId WHERE 1 = 1 ";
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = dbConnection;

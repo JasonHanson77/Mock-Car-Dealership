@@ -299,7 +299,7 @@ GO
 CREATE PROCEDURE SelectAllMakes
 AS
 BEGIN
-	SELECT MakeId, MakeName, DateAdded
+	SELECT *
 	FROM Make
 END
 
@@ -316,7 +316,7 @@ CREATE PROCEDURE SelectMakeById(
 
 )AS
 BEGIN
-	SELECT MakeId, MakeName
+	SELECT *
 	FROM Make
 	WHERE MakeId = @MakeId 
 END
@@ -331,12 +331,13 @@ GO
 CREATE PROCEDURE MakeInsert (
 	@MakeId INT OUTPUT,
 	@MakeName VARCHAR(15),
-	@DateAdded DATETIME2
+	@DateAdded DATETIME2,
+	@AddedBy NVARCHAR(256)
 	
 ) AS
 BEGIN
-	INSERT INTO Make(MakeName, DateAdded)
-	VALUES (@MakeName, @DateAdded)
+	INSERT INTO Make(MakeName, DateAdded, AddedBy)
+	VALUES (@MakeName, @DateAdded, @AddedBy)
 
 	SET @MakeId = SCOPE_IDENTITY();
 END
@@ -353,7 +354,7 @@ GO
 CREATE PROCEDURE SelectAllModels
 AS
 BEGIN
-	SELECT ModelId, ModelName, DateAdded, MakeId
+	SELECT *
 	FROM Model
 END
 
@@ -370,9 +371,27 @@ CREATE PROCEDURE SelectModelById(
 
 )AS
 BEGIN
-	SELECT ModelId, ModelName, DateAdded, MakeId
+	SELECT *
 	FROM Model
 	WHERE ModelId = @ModelId 
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectModelByMakeId')
+      DROP PROCEDURE SelectModelByMakeId
+GO
+
+CREATE PROCEDURE SelectModelByMakeId(
+
+@MakeId INT
+
+)AS
+BEGIN
+	SELECT *
+	FROM Model
+	WHERE MakeId = @MakeId 
 END
 
 GO
@@ -386,12 +405,13 @@ CREATE PROCEDURE ModelInsert (
 	@ModelId INT OUTPUT,
 	@ModelName VARCHAR(30),
 	@DateAdded DATETIME2,
-	@MakeId INT
+	@MakeId INT,
+	@AddedBy NVARCHAR(256)
 	
 ) AS
 BEGIN
-	INSERT INTO Model(ModelName, DateAdded, MakeId)
-	VALUES (@ModelName, @DateAdded, @MakeId)
+	INSERT INTO Model(ModelName, DateAdded, MakeId, AddedBy)
+	VALUES (@ModelName, @DateAdded, @MakeId, @AddedBy)
 
 	SET @ModelId = SCOPE_IDENTITY();
 END
@@ -411,7 +431,7 @@ CREATE PROCEDURE SelectTransmissionById(
 
 )AS
 BEGIN
-	SELECT @TransmissionId, TransmissionType
+	SELECT TransmissionId, TransmissionType
 	FROM Transmission
 	WHERE TransmissionId = @TransmissionId 
 END
@@ -597,7 +617,7 @@ BEGIN
 	SELECT a.UserName As "UserName", a.Id AS "UserId",  SUM(p.PurchasePrice) AS "TotalSales", COUNT(p.SalesPersonId) AS "TotalCarsSold"
 
 	FROM AspNetUsers a
-		INNER JOIN PurchaseLog p ON p.SalesPersonId = a.Id
+		INNER JOIN PurchaseLog p ON p.SalesPersonId = a.UserName
 		Group By UserName, Id
 END
 
@@ -655,6 +675,22 @@ END
 GO
 
 IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
+   WHERE ROUTINE_NAME = 'SelectUserByUserName')
+      DROP PROCEDURE SelectUserByUserName
+GO
+
+CREATE PROCEDURE SelectUserByUserName (
+	@UserName NVARCHAR(256)
+) AS
+BEGIN
+	SELECT *
+	FROM AspNetUsers
+	WHERE Username = @UserName
+END
+
+GO
+
+IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.ROUTINES
    WHERE ROUTINE_NAME = 'UserInsert')
       DROP PROCEDURE UserInsert
 
@@ -673,13 +709,15 @@ CREATE PROCEDURE UserInsert (
 	@TwoFactorEnabled BIT,
 	@LockoutEndDateUtc DATETIME,
 	@LockoutEnabled BIT,
-	@AccessFailedCount INT
+	@AccessFailedCount INT,
+	@FirstName NVARCHAR(MAX),
+	@LastName NVARCHAR(MAX)
 ) AS
 BEGIN
 	INSERT INTO AspNetUsers(Id, UserName, UserRole, Email, EmailConfirmed, PasswordHash, SecurityStamp,
-	PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount)
+	PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount,FirstName, LastName)
 	VALUES (@UserId, @UserName, @UserRole, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp,
-	@PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount)
+	@PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @FirstName, @LastName)
 
 END
 
@@ -703,7 +741,9 @@ CREATE PROCEDURE UserUpdate (
 	@TwoFactorEnabled BIT,
 	@LockoutEndDateUtc DATETIME,
 	@LockoutEnabled BIT,
-	@AccessFailedCount INT
+	@AccessFailedCount INT,
+	@FirstName NVARCHAR(MAX),
+	@LastName NVARCHAR(MAX)
 ) AS
 BEGIN
 	UPDATE AspNetUsers SET 
@@ -718,7 +758,10 @@ BEGIN
 		TwoFactorEnabled = @TwoFactorEnabled,
 		LockoutEndDateUtc = @LockoutEndDateUtc,
 		LockoutEnabled = @LockoutEnabled,
-		AccessFailedCount =	@AccessFailedCount
+		AccessFailedCount =	@AccessFailedCount,
+		FirstName = @FirstName,
+		LastName = @LastName
+
 	WHERE Id = @UserId
 END
 

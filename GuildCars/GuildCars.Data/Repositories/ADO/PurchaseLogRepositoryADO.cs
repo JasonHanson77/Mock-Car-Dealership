@@ -1,14 +1,10 @@
 ﻿using GuildCars.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuildCars.Models.Tables;
 using System.Globalization;
 using System.Data.SqlClient;
 using System.Data;
-using System.Data.SqlTypes;
 
 namespace GuildCars.Data.Repositories.ADO
 {
@@ -99,14 +95,30 @@ namespace GuildCars.Data.Repositories.ADO
                         cmd.Parameters.AddWithValue("@AddressTwo", PurchaseLog.AddressTwo);
                     }
 
+                    if (String.IsNullOrEmpty(PurchaseLog.Phone))
+                    {
+                        cmd.Parameters.AddWithValue("@Phone", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@Phone", PurchaseLog.Phone);
+                    }
+
+                    if (String.IsNullOrEmpty(PurchaseLog.Email))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@Email", PurchaseLog.Email);
+                    }
+
                     cmd.Parameters.AddWithValue("@City", PurchaseLog.City);
                     cmd.Parameters.AddWithValue("@ZipCode", PurchaseLog.ZipCode);
-                    cmd.Parameters.AddWithValue("@Email", PurchaseLog.Email);
                     cmd.Parameters.AddWithValue("@PurchasePrice", PurchaseLog.PurchasePrice);
                     cmd.Parameters.AddWithValue("@PurchaseType", PurchaseLog.PurchaseType);
                     cmd.Parameters.AddWithValue("@SalesPersonId", PurchaseLog.SalesPersonId);
                     cmd.Parameters.AddWithValue("@DateSold", PurchaseLog.DateSold);
-                    cmd.Parameters.AddWithValue("@Phone", PurchaseLog.Phone);
 
                     dbConnection.Open();
 

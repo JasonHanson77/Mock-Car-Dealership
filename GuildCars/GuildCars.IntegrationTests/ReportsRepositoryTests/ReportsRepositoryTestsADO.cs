@@ -7,8 +7,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 {
@@ -96,14 +94,14 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 
             List<InventoryReportListingItem> inventoryReportsList = repo.GetInventory().ToList();
 
-            Assert.AreEqual(4, inventoryReportsList.Count);
+            Assert.AreEqual(10, inventoryReportsList.Count);
 
-            Assert.IsTrue(inventoryReportsList[2].IsNew);
-            Assert.AreEqual("Toyota", inventoryReportsList[2].Make);
-            Assert.AreEqual("Tundra LX", inventoryReportsList[2].Model);
-            Assert.AreEqual(3, inventoryReportsList[2].UnitsInStock);
-            Assert.AreEqual(155445m, inventoryReportsList[2].StockValue);
-            Assert.AreEqual(new DateTime(2017,1,1), inventoryReportsList[2].Year);
+            Assert.IsTrue(inventoryReportsList[8].IsNew);
+            Assert.AreEqual("Toyota", inventoryReportsList[8].Make);
+            Assert.AreEqual("Tundra LX", inventoryReportsList[8].Model);
+            Assert.AreEqual(3, inventoryReportsList[8].UnitsInStock);
+            Assert.AreEqual(155445m, inventoryReportsList[8].StockValue);
+            Assert.AreEqual(new DateTime(2017,1,1), inventoryReportsList[8].Year);
         }
 
         [Test]
@@ -116,7 +114,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
             Assert.AreEqual(2, salesReport.Count);
 
             Assert.AreEqual("11111111-1111-1111-1111-111111111111", salesReport[1].UserId);
-            Assert.AreEqual("Sales Test User 2", salesReport[1].UserName);
+            Assert.AreEqual("sales2@test.com", salesReport[1].UserName);
             Assert.AreEqual(2, salesReport[1].CarsSold);
             Assert.AreEqual(18000m, salesReport[1].Sales);
         }
@@ -139,7 +137,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 
             Assert.AreEqual(27000, searchedSalesReport[0].Sales);
             Assert.AreEqual("00000000-0000-0000-0000-000000000000", searchedSalesReport[0].UserId);
-            Assert.AreEqual("Sales Test User 1", searchedSalesReport[0].UserName);
+            Assert.AreEqual("sales1@test.com", searchedSalesReport[0].UserName);
         }
 
         [Test]
@@ -160,7 +158,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 
             Assert.AreEqual(18000, searchedSalesReport[0].Sales);
             Assert.AreEqual("11111111-1111-1111-1111-111111111111", searchedSalesReport[0].UserId);
-            Assert.AreEqual("Sales Test User 2", searchedSalesReport[0].UserName);
+            Assert.AreEqual("sales2@test.com", searchedSalesReport[0].UserName);
         }
 
         [Test]
@@ -172,7 +170,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
             {
                 MaxDate = null,
                 MinDate = null,
-                UserName = "Sales Test User 1"
+                UserName = "sales1@test.com"
             };
 
             List<SalesReportListingItem> searchedSalesReport = repo.SearchSalesReports(parameters).ToList();
@@ -181,7 +179,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 
             Assert.AreEqual(27000, searchedSalesReport[0].Sales);
             Assert.AreEqual("00000000-0000-0000-0000-000000000000", searchedSalesReport[0].UserId);
-            Assert.AreEqual("Sales Test User 1", searchedSalesReport[0].UserName);
+            Assert.AreEqual("sales1@test.com", searchedSalesReport[0].UserName);
         }
 
         [Test]
@@ -202,7 +200,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 
             Assert.AreEqual(10000, searchedSalesReport[0].Sales);
             Assert.AreEqual("00000000-0000-0000-0000-000000000000", searchedSalesReport[0].UserId);
-            Assert.AreEqual("Sales Test User 1", searchedSalesReport[0].UserName);
+            Assert.AreEqual("sales1@test.com", searchedSalesReport[0].UserName);
         }
 
         [Test]
@@ -214,7 +212,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
             {
                 MaxDate = new DateTime(2017, 4, 2),
                 MinDate = new DateTime(2017, 1, 2),
-                UserName = "Sales Test User 1"
+                UserName = "sales1@test.com"
             };
 
             List<SalesReportListingItem> searchedSalesReport = repo.SearchSalesReports(parameters).ToList();
@@ -223,7 +221,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
 
             Assert.AreEqual(10000, searchedSalesReport[0].Sales);
             Assert.AreEqual("00000000-0000-0000-0000-000000000000", searchedSalesReport[0].UserId);
-            Assert.AreEqual("Sales Test User 1", searchedSalesReport[0].UserName);
+            Assert.AreEqual("sales1@test.com", searchedSalesReport[0].UserName);
         }
 
         [Test]
@@ -235,7 +233,7 @@ namespace GuildCars.IntegrationTests.ReportsRepositoryTests
             {
                 MaxDate = new DateTime(2017, 4, 2),
                 MinDate = new DateTime(2017, 1, 2),
-                UserName = "Sales Test User 2"
+                UserName = "sales2@test.com"
             };
 
             List<SalesReportListingItem> searchedSalesReport = repo.SearchSalesReports(parameters).ToList();

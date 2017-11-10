@@ -1,11 +1,8 @@
 ﻿using GuildCars.Data.Repositories.ADO;
 using GuildCars.Models.Tables;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.TransmissionRepositoryTests
 {
@@ -30,7 +27,7 @@ namespace GuildCars.IntegrationTests.TransmissionRepositoryTests
         {
             TransmissionRepositoryADO repo = new TransmissionRepositoryADO();
 
-            Transmission Transmission = repo.GetAll().FirstOrDefault(c => c.TransmissionId == 2);
+            Transmission Transmission = repo.GetTransmissionById(2);
 
             Assert.AreEqual(Transmission.TransmissionId, 2);
             Assert.AreEqual(Transmission.TransmissionType, "Manual");

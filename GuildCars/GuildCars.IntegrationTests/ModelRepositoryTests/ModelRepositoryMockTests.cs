@@ -4,8 +4,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.IntegrationTests.ModelRepositoryTests
 {
@@ -34,7 +32,7 @@ namespace GuildCars.IntegrationTests.ModelRepositoryTests
 
             List<Model> Models = repo.GetAll().ToList();
 
-            Assert.AreEqual(4, Models.Count);
+            Assert.AreEqual(5, Models.Count);
 
             Assert.AreEqual(Models[2].ModelId, 3);
             Assert.AreEqual(Models[2].ModelName, "TLX");
@@ -61,20 +59,20 @@ namespace GuildCars.IntegrationTests.ModelRepositoryTests
                 MakeId = 2,
                 ModelName = "TestModel",
                 DateAdded = DateTime.Now.Date,
-
+                Addedby = "admin3@test.com"
             };
 
             ModelRepositoryMock repo = new ModelRepositoryMock();
             repo.Insert(model);
 
             List<Model> Models = repo.GetAll().ToList();
-            Assert.AreEqual(5, Models.Count);
+            Assert.AreEqual(6, Models.Count);
 
-            Assert.AreEqual(5, Models[4].ModelId);
-            Assert.AreEqual(2, Models[4].MakeId);
-            Assert.AreEqual(model.ModelName, Models[4].ModelName);
-            Assert.AreEqual(model.DateAdded, Models[4].DateAdded);
-
+            Assert.AreEqual(6, Models[5].ModelId);
+            Assert.AreEqual(2, Models[5].MakeId);
+            Assert.AreEqual(model.ModelName, Models[5].ModelName);
+            Assert.AreEqual(model.DateAdded, Models[5].DateAdded);
+            Assert.AreEqual(model.Addedby, Models[5].Addedby);
         }
     }
 }

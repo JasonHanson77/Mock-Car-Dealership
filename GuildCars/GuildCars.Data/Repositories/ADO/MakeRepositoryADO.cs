@@ -1,9 +1,6 @@
 ﻿using GuildCars.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GuildCars.Models.Tables;
 using System.Data.SqlClient;
 using System.Data;
@@ -35,6 +32,7 @@ namespace GuildCars.Data.Repositories.ADO
                             Make.MakeId = (int)dr["MakeId"];
                             Make.MakeName = dr["MakeName"].ToString();
                             Make.DateAdded = (DateTime)dr["DateAdded"];
+                            Make.AddedBy = dr["AddedBy"].ToString();
 
                             makes.Add(Make);
                         }
@@ -86,6 +84,7 @@ namespace GuildCars.Data.Repositories.ADO
                             make.MakeId = (int)dr["MakeId"];
                             make.MakeName = dr["MakeName"].ToString();
                             make.DateAdded = (DateTime)dr["DateAdded"];
+                            make.AddedBy = dr["AddedBy"].ToString();
                         }
                     }
 
@@ -128,6 +127,7 @@ namespace GuildCars.Data.Repositories.ADO
                     
                     cmd.Parameters.AddWithValue("@MakeName", Make.MakeName);
                     cmd.Parameters.AddWithValue("@DateAdded", Make.DateAdded = DateTime.Now.Date);
+                    cmd.Parameters.AddWithValue("@AddedBy", Make.AddedBy);
                     
 
                     dbConnection.Open();

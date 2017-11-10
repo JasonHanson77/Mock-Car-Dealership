@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,23 +6,34 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GuildCars.UI.Models;
+using GuildCars.Data.Interfaces;
+using GuildCars.Data.Factories;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace GuildCars.UI.Controllers
 {
+
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IUserRepository _userRepository;
+
 
         public AccountController()
         {
+            _userRepository = UserRepositoryFactory.GetRepository();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _userRepository = UserRepositoryFactory.GetRepository();
         }
 
         public ApplicationSignInManager SignInManager
@@ -68,17 +76,28 @@ namespace GuildCars.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            var role = _userRepository.GetUserByUserName(model.UserName).UserRole;
+
+            if (role == "Disabled")
+            {
+                ModelState.AddModelError("", "This Login is associated with a user who has been disabled!");
+                return View(model);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
+            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -139,7 +158,11 @@ namespace GuildCars.UI.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+
+            model.UserRoles = new List<string>() { "Admin", "Sales", "Disabled" };
+
+            return View(model);
         }
 
         //
@@ -151,26 +174,62 @@ namespace GuildCars.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                ApplicationDbContext context = new ApplicationDbContext();
+
+                var user = new ApplicationUser
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserRole = model.UserRole
+                };
 
-                    return RedirectToAction("Index", "Home");
+                try
+                {
+                    var result = await UserManager.CreateAsync(user, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        UserManager.AddToRole(user.Id, user.UserRole);
+
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" Value \"{2}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State, eve.Entry.CurrentValues);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
             }
+                // If we got this far, something failed, redisplay form
+                model.UserRoles = new List<string>() { "Admin", "Sales", "Disabled" };
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+
+                return View(model);
+
+            }
+        
+                
+                
 
         //
         // GET: /Account/ConfirmEmail

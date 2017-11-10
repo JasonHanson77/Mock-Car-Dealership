@@ -1,9 +1,5 @@
 ﻿using GuildCars.Models.Tables;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.Data.Interfaces
 {
@@ -11,6 +7,7 @@ namespace GuildCars.Data.Interfaces
     {
         IEnumerable<Model> GetAll();
         Model GetModelById(int ModelId);
+        List<Model> GetModelsByMakeId(int MakeId);
         void Insert(Model model);
     }
 }

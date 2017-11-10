@@ -4,14 +4,18 @@ using GuildCars.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuildCars.Data.Repositories.Mock
 {
     public class CarsRepositoryMock : ICarsRepository
     {
         private static List<Car> _cars = new List<Car>();
+        private MakeRepositoryMock _makeRepo = new MakeRepositoryMock();
+        private ModelRepositoryMock _modelRepo = new ModelRepositoryMock();
+        private ColorRepositoryMock _colorRepo = new ColorRepositoryMock();
+        private BodyStyleRepositoryMock _bodyStyleRepo = new BodyStyleRepositoryMock();
+        private TransmissionRepositoryMock _transmissionRepo = new TransmissionRepositoryMock();
+
 
         private static Car _carOne = new Car
         {
@@ -31,7 +35,7 @@ namespace GuildCars.Data.Repositories.Mock
             InteriorColorId = 1,
             SalePrice = 50315.00m,
             MSRP = 51815.00m,
-            IMGFilePath = @"Images\2017ToyotaTundra1794.jpg",
+            IMGFilePath = "/Images/2017ToyotaTundra1794.jpg",
             VehicleDetails = "Brand New and looks great."
         };
 
@@ -53,7 +57,7 @@ namespace GuildCars.Data.Repositories.Mock
             InteriorColorId = 3,
             SalePrice = 33000.00m,
             MSRP = 34150.00m,
-            IMGFilePath = @"Images\2018AcuraTLX.png",
+            IMGFilePath = "/Images/2018AcuraTLX.png",
             VehicleDetails = "A silver bullet of power and dependability."
         };
 
@@ -75,7 +79,7 @@ namespace GuildCars.Data.Repositories.Mock
             InteriorColorId = 5,
             SalePrice = 22669.00m,
             MSRP = 24500.00m,
-            IMGFilePath = @"Images\2017FordEscape.png",
+            IMGFilePath = "/Images/2017FordEscape.png",
             VehicleDetails = "Loaded! Used Price for Brand New Quality."
         };
 
@@ -97,21 +101,81 @@ namespace GuildCars.Data.Repositories.Mock
             InteriorColorId = 4,
             SalePrice = 4000.00m,
             MSRP = 5000.00m,
-            IMGFilePath = @"Images\2005DodgeGrandCaravan.jpg",
+            IMGFilePath = "/Images/2005DodgeGrandCaravan.jpg",
             VehicleDetails = "Certified and ready to take your family anywhere."
         };
 
+        
+
         public CarsRepositoryMock()
         {
+            var carId = 5;
             if (_cars.Count() == 0)
             {
                 _cars.Add(_carOne);
                 _cars.Add(_carTwo);
                 _cars.Add(_carThree);
                 _cars.Add(_carFour);
+
+                for (int i = 1; i < 4; i++)
+                {
+                    Car car = new Car
+                    {
+                        CarId = carId,
+                        BodyColorId = i,
+                        InteriorColorId = 1 + i,
+                        TransmissionId = 1,
+                        IMGFilePath = "/Images/MockUsedCarPhoto.jpg",
+                        IsFeatured = false,
+                        IsNew = false,
+                        BodyStyleId = i,
+                        IsSold = false,
+                        MakeId = 5,
+                        ModelId = 5,
+                        Mileage = i.ToString() + "000",
+                        ModelYear = new DateTime(2017, 1, 1),
+                        MSRP = (i * 2000),
+                        SalePrice = (i * 1800),
+                        UnitsInStock = i + 1,
+                        VehicleDetails = "Mock Used Car Number: " + carId.ToString(),
+                        VIN = carId.ToString() + "ABC" + carId.ToString() + "ABC" + carId.ToString() + "ABC" + carId.ToString() + "ABC" + carId.ToString()
+                    };
+
+                    carId++;
+                    _cars.Add(car);
+                }
+
+                for (int i = 1; i < 4; i++)
+                {
+                    Car car = new Car
+                    {
+                        CarId = carId,
+                        BodyColorId = i,
+                        InteriorColorId = 1 + i,
+                        TransmissionId = 1,
+                        IMGFilePath = "/Images/MockNewCarPhoto.jpg",
+                        IsFeatured = true,
+                        IsNew = true,
+                        BodyStyleId = i,
+                        IsSold = false,
+                        MakeId = 5,
+                        ModelId = 5,
+                        Mileage = "0",
+                        ModelYear = new DateTime(2017, 1, 1),
+                        MSRP = (i * 10000),
+                        SalePrice = (i * 9000),
+                        UnitsInStock = i + 1,
+                        VehicleDetails = "Mock New Car Number: " + carId.ToString(),
+                        VIN = carId.ToString() + "ABC" + carId.ToString() + "ABC" + carId.ToString() + "ABC" + carId.ToString() + "ABC" + carId.ToString()
+                    };
+
+                    carId++;
+                    _cars.Add(car);
+                }
             }
         }
 
+        
         public void Delete(int CarId)
         {
             Car car = _cars.FirstOrDefault(c => c.CarId == CarId);
@@ -194,7 +258,70 @@ namespace GuildCars.Data.Repositories.Mock
 
             _cars.RemoveAt(index);
 
+            if (Car.IsSold == true)
+            {
+                if (Car.UnitsInStock >= 1)
+                {
+                    Car.UnitsInStock--;
+                }
+            }
+
             _cars.Insert(index, Car);
+        }
+
+        public IEnumerable<SearchResultItem> SearchCars(CarsSearchParameters parameters)
+        {
+
+            List<SearchResultItem> results = new List<SearchResultItem>();
+
+            var query = _cars.Where(c => c.IsNew == parameters.IsNew);
+
+            if (parameters.MaxYear.HasValue)
+            {
+                query = query.Where(c => c.ModelYear <= parameters.MaxYear);
+            }
+
+            if (parameters.MinYear.HasValue)
+            {
+                query = query.Where(c => c.ModelYear >= parameters.MinYear);
+            }
+
+            if (parameters.MaxPrice > 0)
+            {
+                query = query.Where(c => c.MSRP <= parameters.MaxPrice);
+            }
+            if (parameters.MinPrice > 0)
+            {
+                query = query.Where(c => c.MSRP >= parameters.MinPrice);
+            }
+
+            foreach (var car in query)
+            {
+                SearchResultItem searchResultItem = new SearchResultItem()
+                {
+                    InteriorColor = _colorRepo.GetColorById(car.InteriorColorId).ColorName,
+                    BodyColor = _colorRepo.GetColorById(car.BodyColorId).ColorName,
+                    BodyStyle = _bodyStyleRepo.GetBodyStyleById(car.BodyStyleId).BodyStyleType,
+                    Transmission = _transmissionRepo.GetTransmissionById(car.TransmissionId).TransmissionType,
+                    CarId = car.CarId,
+                    IMGURL = car.IMGFilePath,
+                    MSRP = car.MSRP,
+                    SalePrice = car.SalePrice,
+                    Make = _makeRepo.GetMakeById(car.MakeId).MakeName,
+                    Model = _modelRepo.GetModelById(car.ModelId).ModelName,
+                    Mileage = car.Mileage,
+                    VIN = car.VIN,
+                    Year = car.ModelYear.Year.ToString()
+                };
+                results.Add(searchResultItem);
+            }
+
+            if (!String.IsNullOrEmpty(parameters.SearchTerm))
+            {
+                results = results.Where(c => (c.Make).ToLower().Contains(parameters.SearchTerm.ToLower()) || c.Model.ToLower().Contains(parameters.SearchTerm.ToLower()) || c.Year.Contains(parameters.SearchTerm)).Take(20).ToList();
+            }
+
+            return results;
         }
     }
 }
