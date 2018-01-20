@@ -11,11 +11,8 @@ namespace GuildCars.UI.Models
         [Required]
         public string Name { get; set; }
         [EmailAddress]
-        [Required]
         public string Email { get; set; }
         [Phone]
-        [StringLength(13, MinimumLength = 10)]
-        [Required]
         public string Phone { get; set; }
         [Required]
         public string Message { get; set; }
@@ -29,6 +26,13 @@ namespace GuildCars.UI.Models
             {
                 errors.Add(new ValidationResult("You must enter either a phone number or email to so we can contact you.",
                     new[] { "Email", "Phone" }));
+            }
+
+            if (int.TryParse(Phone, out int result))
+            {
+                if(Phone.Length < 10)
+                errors.Add(new ValidationResult("Phone Number must be 10 digits. Include area code.",
+                    new[] {  "Phone" }));
             }
 
             return errors;

@@ -36,6 +36,7 @@ namespace GuildCars.UI.Controllers
         }
 
         // GET: Sales
+        [Authorize(Roles = "Sales")]
         public ActionResult Index()
         {
             return View();
@@ -113,7 +114,7 @@ namespace GuildCars.UI.Controllers
             model.SalePrice = model.PurchaseViewModel.Car.SalePrice;
             model.MSRP = model.PurchaseViewModel.Car.MSRP;
             model.PurchaseViewModel.Model = _modelRepo.GetModelById(model.PurchaseViewModel.Car.ModelId).ModelName;
-            model.PurchaseViewModel.Make = _makeRepo.GetMakeById(model.PurchaseViewModel.Car.MakeId).MakeName;
+            model.PurchaseViewModel.Make = _makeRepo.GetMakeById(model.PurchaseViewModel.Car.MakeId.ToString()).MakeName;
             model.PurchaseViewModel.IntColor = _colorRepo.GetColorById(model.PurchaseViewModel.Car.InteriorColorId).ColorName;
             model.PurchaseViewModel.BodyColor = _colorRepo.GetColorById(model.PurchaseViewModel.Car.BodyColorId).ColorName;
             model.PurchaseViewModel.BodyStyle = _bodyStyleRepository.GetBodyStyleById(model.PurchaseViewModel.Car.BodyStyleId).BodyStyleType;

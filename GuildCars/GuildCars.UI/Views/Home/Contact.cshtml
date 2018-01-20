@@ -18,17 +18,17 @@
                     </div>
                     <div class="form-group guildCarsFormGroup">
                         <label>Email: </label>
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                        @Html.TextBoxFor(m => m.Email, new { @id = "email", @class = "form-control contact-group", type = "email" })
                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Email)</span>
                     </div>
                     <div class="form-group guildCarsFormGroup">
                         <label>Phone: </label>
-                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", type = "tel" })
+                        @Html.TextBoxFor(m => m.Phone, new { @id = "tel", @class = "form-control contact-group", type = "tel" })
                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Phone)</span>
                     </div>
                     <div class="form-group guildCarsFormGroup">
                         <label>Message: </label>
-                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", type = "text", @style="width:400px; Max-Width:60%;", rows=8 })
+                        @Html.TextAreaFor(m => m.Message, new { @class = "form-control", type = "text", @style = "width:400px; Max-Width:60%;", rows = 8 })
                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Message)</span>
                     </div>
                     <button type="submit" class="btn btn-primary guildCarsFormGroup">Submit</button>
@@ -52,13 +52,11 @@
                         'Name': {
                             required: true,
                         },
-                        'Email': {
-                            required: true,
-                            email: true,
+                        email: {
+                            require_from_group: [1, ".contact-group"]
                         },
-                        'Phone': {
-                            required: true,
-                            tel: true,
+                        tel: {
+                            require_from_group: [1, ".contact-group"]
                         },
                         'Message': {
                             required: true

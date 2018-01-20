@@ -27,7 +27,7 @@ namespace GuildCars.Data.Repositories.Mock
                 InventoryReportListingItem reportItem = new InventoryReportListingItem
                 {
                     IsNew = car.IsNew,
-                    Make = makeRepo.GetMakeById(car.MakeId).MakeName,
+                    Make = makeRepo.GetMakeById(car.MakeId.ToString()).MakeName,
                     Model = modelRepo.GetModelById(car.ModelId).ModelName,
                     UnitsInStock = car.UnitsInStock,
                     StockValue = car.MSRP * car.UnitsInStock,

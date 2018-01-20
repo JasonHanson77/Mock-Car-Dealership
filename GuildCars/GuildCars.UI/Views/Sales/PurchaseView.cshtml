@@ -81,14 +81,14 @@
                     </td>
                     <td>
                         <label>Phone: </label>
-                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Phone, new { @id = "Phone", @class = "form-control contact-group" })
                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Phone)</span>
                     </td>
                 </tr>
                 <tr class="form-group guildCarsFormGroup" style="border: hidden">
                     <td>
                         <label>Email: </label>
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "Email" })
+                        @Html.TextBoxFor(m => m.Email, new { @id="Email", @class = "form-control contact-group", type = "Email" })
                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Email)</span>
                     </td>
                 </tr>
@@ -156,13 +156,13 @@
                     'Name': {
                         required: true,
                     },
-                    'Phone': {
-                        required: true,
-                        tel: true,
-                    },
                     'Email': {
-                        required: true,
-                        email: true,
+                        required: function (element) {
+                            return (!$("#Phone").hasClass('valid'));
+                    },
+                    'Phone': {
+                        required: function (element) {
+                            return (!$("#Email").hasClass('valid'));
                     },
                     'StreetOne': {
                         required: true,

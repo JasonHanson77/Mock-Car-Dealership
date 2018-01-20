@@ -205,6 +205,7 @@ namespace GuildCars.IntegrationTests.UserRepositoryTests
             user.PhoneNumber = "804-555-5555";
             user.PhoneNumberConfirmed = true;
             user.UserRole = "Sales";
+            user.PasswordHash = "APTyyq+Bp99LHIKp2XOeOiLot5b/Li+db4pQdafI6FN6xfBhCkfOKzl/s0SQ5CjOfg==";
 
             repo.Update(user);
 
@@ -213,6 +214,7 @@ namespace GuildCars.IntegrationTests.UserRepositoryTests
 
             Assert.AreEqual("Added-Test-User", users[4].Id);
             Assert.AreEqual("Updated User", users[4].UserName);
+            Assert.AreEqual("APTyyq+Bp99LHIKp2XOeOiLot5b/Li+db4pQdafI6FN6xfBhCkfOKzl/s0SQ5CjOfg==", users[4].PasswordHash);
             Assert.AreEqual("updateduser@test.com", users[4].Email);
             Assert.AreEqual(0, users[4].AccessFailedCount);
             Assert.IsTrue(users[4].TwoFactorEnabled);
@@ -221,7 +223,6 @@ namespace GuildCars.IntegrationTests.UserRepositoryTests
             Assert.IsFalse(users[4].LockoutEnabled);
             Assert.AreEqual("804-555-5555", users[4].PhoneNumber);
             Assert.IsTrue(users[4].LockoutEndDateUtc == DateTime.MinValue);
-            Assert.IsTrue(string.IsNullOrEmpty(users[4].PasswordHash));
             Assert.IsTrue(string.IsNullOrEmpty(users[4].SecurityStamp));
             Assert.AreEqual("Sales", users[4].UserRole);
         }

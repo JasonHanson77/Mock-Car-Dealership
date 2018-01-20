@@ -20,14 +20,14 @@
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>Make: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Make, new SelectList(Model.Makes, "MakeId", "MakeName"), "Select Make", new { @id = "Makes", @style = "width:200px; display: block; height: 30px;", @onchange = "javascript:getModels(this.value);" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Make)</span>
+                    @Html.DropDownListFor(m => m.AdminFormModel.MakeName, new SelectList(Model.Makes, "MakeName", "MakeName"), "Select Make", new { @id = "Makes", @style = "width:200px; display: block; height: 30px;", @onchange = "javascript:getModels(this.value);" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.MakeName)</span>
                 </td>
 
                 <td>
                     <label>Model: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Model, new SelectList(Model.Models, "ModelId", "ModelName"), "Select Make First", new { @id = "Models", @style = "width:200px; display: block; height: 30px;" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Model)</span>
+                    @Html.DropDownListFor(m => m.AdminFormModel.ModelName, new SelectList(Model.Models, "ModelId", "ModelName"), "Select Make First", new { @id = "Models", @style = "width:200px; display: block; height: 30px;" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.ModelName)</span>
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
@@ -37,7 +37,7 @@
                 </td>
                 <td>
                     <label>BodyStyle: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.BodyStyle, new SelectList(Model.BodyStyles, "BodyStyleId", "BodyStyleType"), new { @id = "BodyStyleType", @style = "width:200px; display: block; height: 30px;" })
+                    @Html.DropDownListFor(m => m.AdminFormModel.BodyStyleType, new SelectList(Model.BodyStyles, "BodyStyleId", "BodyStyleType"), new { @id = "BodyStyleType", @style = "width:200px; display: block; height: 30px;" })
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
@@ -48,7 +48,7 @@
                 </td>
                 <td>
                     <label>Transmission: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Transmission, new SelectList(Model.Tranmissions, "TransmissionId", "TransmissionType"), new { @id = "TransmissionType", @style = "width:200px; display: block; height: 30px;" })
+                    @Html.DropDownListFor(m => m.AdminFormModel.TransmissionType, new SelectList(Model.Tranmissions, "TransmissionId", "TransmissionType"), new { @id = "TransmissionType", @style = "width:200px; display: block; height: 30px;" })
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">

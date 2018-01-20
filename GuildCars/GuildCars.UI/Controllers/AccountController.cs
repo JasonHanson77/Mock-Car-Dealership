@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System;
 
 namespace GuildCars.UI.Controllers
 {
@@ -76,12 +77,15 @@ namespace GuildCars.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            var role = _userRepository.GetUserByUserName(model.UserName).UserRole;
+            if (_userRepository.GetUserByUserName(model.UserName) != null){
 
-            if (role == "Disabled")
-            {
-                ModelState.AddModelError("", "This Login is associated with a user who has been disabled!");
-                return View(model);
+                var role = _userRepository.GetUserByUserName(model.UserName).UserRole;
+
+                if (role == "Disabled")
+                {
+                    ModelState.AddModelError("", "This Login is associated with a user who has been disabled!");
+                    return View(model);
+                }
             }
 
             if (!ModelState.IsValid)
@@ -193,17 +197,19 @@ namespace GuildCars.UI.Controllers
                     {
                         UserManager.AddToRole(user.Id, user.UserRole);
 
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        TempData["Success"] = "New user has been added!";
 
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Users", "Admin");
                     }
                     AddErrors(result);
+                    model.ErrorMessage = result.Errors.FirstOrDefault().ToString();
                 }
                 catch (DbEntityValidationException e)
                 {
@@ -224,13 +230,10 @@ namespace GuildCars.UI.Controllers
                 model.UserRoles = new List<string>() { "Admin", "Sales", "Disabled" };
 
 
-                return View(model);
+                return View("Register", model);
 
             }
         
-                
-                
-
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

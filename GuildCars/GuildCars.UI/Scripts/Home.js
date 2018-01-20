@@ -10,7 +10,7 @@ function purchaseVehicle(CarId) {
     window.location.replace("Sales/Purchase/" + CarId);
 }
 function editVehicle(CarId) {
-    window.location.replace("/Admin/Edit/" + CarId);;
+    window.location.replace("Admin/Edit/" + CarId);;
 }
 
 function deleteCar(carId) {
@@ -125,8 +125,7 @@ function searchVehicles(vehicleSearch) {
     $("#VehicleSearchResultsDiv").hide();
 
 
-    // grab the the tbody element that will hold the rows of dvd information
-    var vehicleSearchRows = $("#vehicleSearchRows");
+     var vehicleSearchRows = $("#vehicleSearchRows");
 
     var minPrice = $("#minPriceSelectBox").val();
 

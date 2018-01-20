@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GuildCars.Data.Repositories.Mock
 {
-    public class UserRepositoryMock :IUserRepository
+    public class UserRepositoryMock : IUserRepository
     {
         private static List<User> _users = new List<User>();
 
@@ -113,7 +113,13 @@ namespace GuildCars.Data.Repositories.Mock
 
         public User GetUserByUserName(string UserName)
         {
-            throw new System.NotImplementedException();
+            var user = _users.Find(u => u.UserName == UserName);
+            return user;
+        }
+
+        public IEnumerable<User> GetUsersByRole(string Role)
+        {
+            return _users.Where(u => u.UserRole == Role);
         }
     }
 }

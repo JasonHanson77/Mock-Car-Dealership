@@ -541,9 +541,9 @@ namespace GuildCars.Data.Repositories.ADO
 
         public void Update(Car Car)
         {
-            if(Car.IsSold == true)
+            if (Car.IsSold == true)
             {
-                if(Car.UnitsInStock >= 1)
+                if (Car.UnitsInStock >= 1)
                 {
                     Car.UnitsInStock--;
                 }

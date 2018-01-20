@@ -19,8 +19,8 @@ namespace GuildCars.UI.Models
         public SelectList IntColors { get; set; }
         public SelectList Colors { get; set; }
         public IEnumerable<string> Types { get; set; }
-        public SelectList Tranmissions { get; set; }
-        public AdminEditFormModel AdminFormModel { get; set; }
+        public SelectList Transmissions { get; set; }
+        public AdminEditFormModel AdminEditFormModel { get; set; }
         public HttpPostedFileBase Picture { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace GuildCars.IntegrationTests.MakeRepositoryTests
 
             Assert.AreEqual(5, Makes.Count);
 
-            Assert.AreEqual(Makes[2].MakeId, 3);
+            Assert.AreEqual(Makes[2].MakeId, 3.ToString());
             Assert.AreEqual(Makes[2].MakeName, "Ford");
             Assert.AreEqual(Makes[2].DateAdded, new DateTime(2015, 6, 2));
         }
@@ -69,9 +69,9 @@ namespace GuildCars.IntegrationTests.MakeRepositoryTests
         {
             MakeRepositoryADO repo = new MakeRepositoryADO();
 
-            Make Make = repo.GetAll().FirstOrDefault(c => c.MakeId == 3);
+            Make Make = repo.GetAll().FirstOrDefault(c => c.MakeId == 3.ToString());
 
-            Assert.AreEqual(Make.MakeId, 3);
+            Assert.AreEqual(Make.MakeId, 3.ToString());
             Assert.AreEqual(Make.MakeName, "Ford");
             Assert.AreEqual(Make.DateAdded, new DateTime(2015, 6, 2));
         }
@@ -93,7 +93,7 @@ namespace GuildCars.IntegrationTests.MakeRepositoryTests
             List<Make> makes = repo.GetAll().ToList();
             Assert.AreEqual(6, makes.Count);
 
-            Assert.AreEqual(6, makes[5].MakeId);
+            Assert.AreEqual("6", makes[5].MakeId);
             Assert.AreEqual(make.MakeName, makes[5].MakeName);
             Assert.AreEqual(make.DateAdded, makes[5].DateAdded);
             Assert.AreEqual(make.AddedBy, makes[5].AddedBy);

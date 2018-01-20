@@ -11,7 +11,6 @@ namespace GuildCars.UI.Models.Sales
     {
         [Required]
         public string Name { get; set; }
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
         [Required]
@@ -21,16 +20,13 @@ namespace GuildCars.UI.Models.Sales
         [Required]
         public string ZipCode { get; set; }
         public string StreetTwo { get; set; }
-        [Required]
         [Phone]
-        [StringLength(13, MinimumLength = 10)]
         public string Phone { get; set; }
         public List<string> States { get; set; }
         [Required]
         public string State { get; set; }
         [Required]
         public string PurchaseType { get; set; }
-        [Required]
         public string InputPurchasePrice { get; set; }
         public decimal PurchasePrice { get; set; }
         public int CarId { get; set; }
@@ -48,6 +44,13 @@ namespace GuildCars.UI.Models.Sales
             {
                 errors.Add(new ValidationResult("You must enter either a phone number or email!",
                     new[] { "Email", "Phone" }));
+            }
+
+            if (int.TryParse(Phone, out int result))
+            {
+                if (Phone.Length < 10)
+                    errors.Add(new ValidationResult("Phone Number must be 10 digits. Include area code.",
+                        new[] { "Phone" }));
             }
 
             if (string.IsNullOrEmpty(ZipCode) || ZipCode.Length != 5)
@@ -76,7 +79,7 @@ namespace GuildCars.UI.Models.Sales
                     new[] { "PurchasePrice" }));
             }
 
-            if(!int.TryParse(ZipCode, out int result))
+            if(!int.TryParse(ZipCode, out int res))
             {
                 errors.Add(new ValidationResult("Zip Code must be numbers only!",
                     new[] { "ZipCode" }));

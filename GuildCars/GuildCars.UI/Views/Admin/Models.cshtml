@@ -40,7 +40,7 @@
                 foreach (var m in Model.Models)
                 {
                     <tr class="form-group guildCarsFormGroup">
-                        <td>@Model.Makes.First(mod => mod.MakeId == @m.MakeId).MakeName</td>
+                        <td>@Model.Makes.First(mod => mod.MakeId == @m.MakeId.ToString()).MakeName</td>
                         <td>@m.ModelName</td>
                         <td>@m.DateAdded.Date.ToShortDateString()</td>
                         <td>@m.Addedby</td>

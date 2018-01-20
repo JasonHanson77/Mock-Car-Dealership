@@ -138,6 +138,72 @@ namespace GuildCars.Data.Repositories.ADO
             }
         }
 
+        public IEnumerable<User> GetUsersByRole(string Role)
+        {
+            List<User> users = new List<User>();
+            User user = null;
+
+            using (var dbConnection = new SqlConnection(Settings.GetConnectionString()))
+            {
+                try
+                {
+                    dbConnection.Open();
+
+                    SqlCommand cmd = new SqlCommand("SelectUsersByRole", dbConnection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Role", Role);
+
+
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            user = new User();
+
+                            user.Id = dr["Id"].ToString();
+                            user.Email = dr["Email"].ToString();
+                            user.EmailConfirmed = dr.GetBoolean(dr.GetOrdinal("EmailConfirmed"));
+                            user.PhoneNumberConfirmed = dr.GetBoolean(dr.GetOrdinal("PhoneNumberConfirmed"));
+                            user.TwoFactorEnabled = dr.GetBoolean(dr.GetOrdinal("TwoFactorEnabled"));
+                            user.AccessFailedCount = (int)dr["AccessFailedCount"];
+                            user.LockoutEnabled = dr.GetBoolean(dr.GetOrdinal("LockoutEnabled"));
+                            user.PasswordHash = dr["PasswordHash"].ToString();
+                            user.PhoneNumber = dr["PhoneNumber"].ToString();
+                            user.LockoutEndDateUtc = (dr["LockoutEndDateUtc"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dr["LockoutEndDateUtc"]));
+                            user.UserName = dr["UserName"].ToString();
+                            user.SecurityStamp = dr["SecurityStamp"].ToString();
+                            user.UserRole = dr["UserRole"].ToString();
+                            user.FirstName = dr["FirstName"].ToString();
+                            user.LastName = dr["LastName"].ToString();
+
+                            users.Add(user);
+                        }
+                    }
+
+                    return users;
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = String.Format(CultureInfo.CurrentCulture,
+                              "Exception Type: {0}, Message: {1}{2}",
+                              ex.GetType(),
+                              ex.Message,
+                              ex.InnerException == null ? String.Empty :
+                              String.Format(CultureInfo.CurrentCulture,
+                                           " InnerException Type: {0}, Message: {1}",
+                                           ex.InnerException.GetType(),
+                                           ex.InnerException.Message));
+
+                    System.Diagnostics.Debug.WriteLine(errorMessage);
+
+                    dbConnection.Close();
+                }
+
+                return users;
+            }
+        }
         public IEnumerable<User> GetUsers()
         {
             List<User> users = new List<User>();
@@ -251,7 +317,7 @@ namespace GuildCars.Data.Repositories.ADO
                     {
                         cmd.Parameters.AddWithValue("@LockoutEndDateUtc", user.LockoutEndDateUtc);
                     }
-                    
+
                     cmd.Parameters.AddWithValue("@LockoutEnabled", user.LockoutEnabled);
                     cmd.Parameters.AddWithValue("@EMailConfirmed", user.EmailConfirmed);
 
@@ -267,7 +333,7 @@ namespace GuildCars.Data.Repositories.ADO
                     cmd.Parameters.AddWithValue("@PhoneNUmberConfirmed", user.PhoneNumberConfirmed);
                     cmd.Parameters.AddWithValue("@AccessFailedCOunt", user.AccessFailedCount);
 
-                    if(user.PasswordHash == null)
+                    if (user.PasswordHash == null)
                     {
                         cmd.Parameters.AddWithValue("@PasswordHash", DBNull.Value);
                     }
@@ -293,9 +359,9 @@ namespace GuildCars.Data.Repositories.ADO
                     {
                         cmd.Parameters.AddWithValue("@Email", user.Email);
                     }
-                    
+
                     cmd.Parameters.AddWithValue("@TwoFactorEnabled", user.TwoFactorEnabled);
-                                        
+
                     dbConnection.Open();
 
                     cmd.ExecuteNonQuery();
@@ -384,15 +450,7 @@ namespace GuildCars.Data.Repositories.ADO
 
                     cmd.Parameters.AddWithValue("@PhoneNUmberConfirmed", user.PhoneNumberConfirmed);
                     cmd.Parameters.AddWithValue("@AccessFailedCOunt", user.AccessFailedCount);
-
-                    if (user.PasswordHash == null)
-                    {
-                        cmd.Parameters.AddWithValue("@PasswordHash", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
-                    }
+                    cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
 
                     if (user.SecurityStamp == null)
                     {

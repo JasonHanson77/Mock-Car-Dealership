@@ -11,101 +11,95 @@
     {
         @Html.ValidationSummary(true)
         @Html.HiddenFor(m => m.Car.CarId, new { @id = "CarId" })
-        @Html.HiddenFor(m => m.AdminFormModel.MakeId, new { @id = "MakeId" })
-        @Html.HiddenFor(m => m.AdminFormModel.ModelId, new { @id = "ModelId" })
-        @Html.HiddenFor(m => m.AdminFormModel.BodyStyleId, new { @id = "BodyStyleId" })
-        @Html.HiddenFor(m => m.AdminFormModel.TransmissionId, new { @id = "TransmissionId" })
-        @Html.HiddenFor(m => m.AdminFormModel.InteriorColorId, new { @id = "IntColorId" })
-        @Html.HiddenFor(m => m.AdminFormModel.BodyColorId, new { @id = "BodyColorId" })
-
+      
         <table class="table-responsive table" style="border-collapse: collapse">
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>Make: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Make, Model.Makes, new { @class = "formDropDown" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Make)</span>
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.MakeId, Model.Makes, new { @class = "formDropDown", @onchange = "javascript:getModels(this.value)" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.MakeId)</span>
                 </td>
 
                 <td>
                     <label>Model: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Model, Model.Models, new { @class = "formDropDown" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Model)</span>
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.ModelId, Model.Models, new { @class = "formDropDown", @id = "Models" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.ModelId)</span>
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>Type: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Type, new SelectList(Model.Types, Model.AdminFormModel.Type), new { @id = "VehicleType", @style = "width:200px; display: block; height: 30px;"})
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.Type, new SelectList(Model.Types, Model.AdminEditFormModel.Type), new { @id = "VehicleType", @style = "width:200px; display: block; height: 30px;" })
                 </td>
                 <td>
                     <label>BodyStyle: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.BodyStyle, Model.BodyStyles, new { @class = "formDropDown" })
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.BodyStyleId, Model.BodyStyles, new { @id = "BodyStyle", @class = "formDropDown" })
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>Year: </label>
-                    @Html.TextBoxFor(m => m.AdminFormModel.Year, new { @class = "form-control", @maxlength = 4 })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Year)</span>
+                    @Html.TextBoxFor(m => m.AdminEditFormModel.Year, new { @class = "form-control", @maxlength = 4 })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.Year)</span>
                 </td>
                 <td>
                     <label>Transmission: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Transmission, Model.Tranmissions, new { @class = "formDropDown" })
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.TransmissionId, Model.Transmissions, new { @class = "formDropDown" })
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>Color: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Color, Model.Colors, new { @class = "formDropDown" })
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.BodyColorId, Model.Colors, new { @class = "formDropDown" })
                 </td>
                 <td>
                     <label>Interior Color: </label>
-                    @Html.DropDownListFor(m => m.AdminFormModel.Interior, Model.IntColors, new { @class = "formDropDown" })
+                    @Html.DropDownListFor(m => m.AdminEditFormModel.InteriorColorId, Model.IntColors, new { @class = "formDropDown" })
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>Mileage: </label>
-                    @Html.TextBoxFor(m => m.AdminFormModel.Mileage, new { @class = "form-control" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Mileage)</span>
+                    @Html.TextBoxFor(m => m.AdminEditFormModel.Mileage, new { @class = "form-control" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.Mileage)</span>
                 </td>
                 <td>
                     <label>VIN #: </label>
-                    @Html.TextBoxFor(m => m.AdminFormModel.VIN, new { @class = "form-control" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.VIN)</span>
+                    @Html.TextBoxFor(m => m.AdminEditFormModel.VIN, new { @class = "form-control" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.VIN)</span>
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
                 <td>
                     <label>MSRP: </label>
-                    @Html.TextBoxFor(m => m.AdminFormModel.MSRPInput, new { @class = "form-control" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.MSRPInput)</span>
+                    @Html.TextBoxFor(m => m.AdminEditFormModel.MSRPInput, new { @class = "form-control" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.MSRPInput)</span>
                 </td>
                 <td>
                     <label>Sale Price: </label>
-                    @Html.TextBoxFor(m => m.AdminFormModel.SalePriceInput, new { @class = "form-control" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.SalePriceInput)</span>
+                    @Html.TextBoxFor(m => m.AdminEditFormModel.SalePriceInput, new { @class = "form-control" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.SalePriceInput)</span>
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden; width: 100%">
                 <td colspan=2>
                     <label>Description: </label>
-                    @Html.TextAreaFor(m => m.AdminFormModel.Description, new { rows = 8, @style = "width:100%; max-width:69.5%; display: block" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Description)</span>
+                    @Html.TextAreaFor(m => m.AdminEditFormModel.Description, new { rows = 8, @style = "width:100%; max-width:69.5%; display: block" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.Description)</span>
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden; width: 100%">
                 <td colspan=2>
                     <img src="@Url.Content(Model.Car.IMGFilePath)" class="resize" />
                     <label>Image</label>
-                    @Html.TextBoxFor(m => m.AdminFormModel.Picture, new { type = "file", @class = "form-control" })
-                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminFormModel.Picture)</span>
+                    @Html.TextBoxFor(m => m.AdminEditFormModel.Picture, new { type = "file", @class = "form-control" })
+                    <span class="text-danger">@Html.ValidationMessageFor(m => m.AdminEditFormModel.Picture)</span>
                 </td>
             </tr>
             <tr class="form-group guildCarsForm" style="border: hidden">
                 <td>
                     <label>Feature Vehicle</label>
-                    @Html.CheckBoxFor(m => m.AdminFormModel.Featured, new { @class = "form-control", @style = "width:15px; height:15px;" })
+                    @Html.CheckBoxFor(m => m.AdminEditFormModel.Featured, new { @class = "form-control", @style = "width:15px; height:15px;" })
                 </td>
             </tr>
             <tr class="form-group guildCarsFormGroup" style="border: hidden">
@@ -127,10 +121,10 @@
 
             $('#editVehicleForm').validate({
                 rules: {
-                    'AdminFormModel.Make': {
+                    'AdminEditFormModel.Make': {
                         required: true
                     },
-                    'AdminFormModel.Model': {
+                    'AdminEditFormModel.Model': {
                         required: true
                     },
                     'VehicleType': {
@@ -142,16 +136,16 @@
                     'TransmissionType': {
                         required: true,
                     },
-                    'AdminFormModel.Year': {
+                    'AdminEditFormModel.Year': {
                         required: true,
                         number: true,
                         min: 2000,
                     },
-                    'AdminFormModel.Mileage': {
+                    'AdminEditFormModel.Mileage': {
                         required: true,
                         number: true,
                     },
-                    'AdminFormModel.VIN': {
+                    'AdminEditFormModel.VIN': {
                         required: true,
                     },
                     'InteriorColor': {
@@ -160,10 +154,10 @@
                     'BodyColor': {
                         required: true,
                     },
-                    'AdminFormModel.MSRPInput': {
+                    'AdminEditFormModel.MSRPInput': {
                         required: true,
                     },
-                    'AdminFormModel.SalePriceInput': {
+                    'AdminEditFormModel.SalePriceInput': {
                         required: true,
                     },
                 }

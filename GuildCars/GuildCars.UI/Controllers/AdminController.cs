@@ -165,41 +165,31 @@ namespace GuildCars.UI.Controllers
                 newOrUsed = "Used";
             }
 
-            model.AdminFormModel = new AdminEditFormModel
+            model.AdminEditFormModel = new AdminEditFormModel
             {
                 BodyColorId = model.Car.BodyColorId,
-                Color = _colorRepo.GetColorById(model.Car.BodyColorId).ColorName,
                 InteriorColorId = model.Car.InteriorColorId,
-                Interior = _colorRepo.GetColorById(model.Car.InteriorColorId).ColorName,
                 VIN = model.Car.VIN,
-                MakeId = model.Car.MakeId,
+                MakeId = model.Car.MakeId.ToString(),
                 ModelId = model.Car.ModelId,
-                Make = _makeRepo.GetMakeById(model.Car.MakeId).MakeName,
-                Model = _modelRepo.GetModelById(model.Car.ModelId).ModelName,
                 Mileage = model.Car.Mileage,
                 ModelYear = model.Car.ModelYear,
                 Year = model.Car.ModelYear.Year.ToString(),
-                BodyStyle = _bodyStyleRepository.GetBodyStyleById(model.Car.BodyStyleId).BodyStyleType,
                 BodyStyleId = model.Car.BodyStyleId,
                 Description = model.Car.VehicleDetails,
+                TransmissionId = model.Car.TransmissionId,
                 Type = newOrUsed,
                 MSRPInput = model.Car.MSRP.ToString(),
                 SalePriceInput = model.Car.SalePrice.ToString()
             };
 
-            model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName",
-                new { @value = model.AdminFormModel.MakeId, @id = "Makes", @onchange = "javascript:getModels(this.value);" });
-            model.Models = new SelectList(_modelRepo.GetModelsByMakeId(model.AdminFormModel.MakeId), "ModelId", "ModelName",
-                new { @value = model.AdminFormModel.ModelId, @id = "Models", });
-            model.Tranmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType",
-                new { @value = model.AdminFormModel.TransmissionId, });
+            model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName", model.AdminEditFormModel.MakeId);
+            model.Models = new SelectList(_modelRepo.GetAll(), "ModelId", "ModelName", model.AdminEditFormModel.ModelId);
+            model.Transmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType", model.AdminEditFormModel.TransmissionId);
             model.Types = new List<string>() { "New", "Used" };
-            model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodyStyleType",
-                new { @value = model.AdminFormModel.BodyStyleId, @id = "BodyStyleType", });
-            model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                new { @value = model.AdminFormModel.BodyColorId, @id = "BodyColor", });
-            model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                new { @value = model.AdminFormModel.InteriorColorId, @id = "InteriorColor", });
+            model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodystyleType", model.AdminEditFormModel.BodyStyleId);
+            model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.BodyColorId);
+            model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.InteriorColorId);
 
             return View("EditVehicle", model);
         }
@@ -217,64 +207,58 @@ namespace GuildCars.UI.Controllers
                     {
                         Car car = new Car()
                         {
-                            MakeId = model.AdminFormModel.MakeId,
-                            ModelId = model.AdminFormModel.ModelId,
-                            IsNew = model.AdminFormModel.isNew,
-                            BodyColorId = model.AdminFormModel.BodyColorId,
-                            InteriorColorId = model.AdminFormModel.InteriorColorId,
-                            BodyStyleId = model.AdminFormModel.BodyStyleId,
-                            IsFeatured = model.AdminFormModel.Featured,
+                            MakeId = int.Parse(model.AdminEditFormModel.MakeId),
+                            ModelId = model.AdminEditFormModel.ModelId,
+                            IsNew = model.AdminEditFormModel.isNew,
+                            BodyColorId = model.AdminEditFormModel.BodyColorId,
+                            InteriorColorId = model.AdminEditFormModel.InteriorColorId,
+                            BodyStyleId = model.AdminEditFormModel.BodyStyleId,
+                            IsFeatured = model.AdminEditFormModel.Featured,
                             IsSold = false,
-                            ModelYear = model.AdminFormModel.ModelYear,
-                            Mileage = model.AdminFormModel.Mileage,
-                            MSRP = model.AdminFormModel.MSRP,
-                            SalePrice = model.AdminFormModel.SalePrice,
-                            VehicleDetails = model.AdminFormModel.Description,
-                            TransmissionId = model.AdminFormModel.TransmissionId,
-                            VIN = model.AdminFormModel.VIN,
+                            ModelYear = model.AdminEditFormModel.ModelYear,
+                            Mileage = model.AdminEditFormModel.Mileage,
+                            MSRP = model.AdminEditFormModel.MSRP,
+                            SalePrice = model.AdminEditFormModel.SalePrice,
+                            VehicleDetails = model.AdminEditFormModel.Description,
+                            TransmissionId = model.AdminEditFormModel.TransmissionId,
+                            VIN = model.AdminEditFormModel.VIN,
                             IMGFilePath = oldCar.IMGFilePath,
                             CarId = oldCar.CarId,
                             UnitsInStock = oldCar.UnitsInStock
 
                         };
 
-                        if (model.AdminFormModel.Type == "New")
+                        if (model.AdminEditFormModel.Type == "New")
                         {
                             car.IsNew = true;
                         }
 
                         model.Car = car;
 
-                        if (model.AdminFormModel.Picture == null)
+                        if (model.AdminEditFormModel.Picture == null)
                         {
                             _carsRepo.Update(car);
 
-                            model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName",
-                                 new { @value = model.AdminFormModel.MakeId, @id = "Makes", @onchange = "javascript:getModels(this.value);" });
-                            model.Models = new SelectList(_modelRepo.GetModelsByMakeId(model.AdminFormModel.MakeId), "ModelId", "ModelName",
-                                new { @value = model.AdminFormModel.ModelId, @id = "Models", });
-                            model.Tranmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType",
-                                new { @value = model.AdminFormModel.TransmissionId, });
+                            model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName", model.AdminEditFormModel.MakeId);
+                            model.Models = new SelectList(_modelRepo.GetAll(), "ModelId", "ModelName", model.AdminEditFormModel.ModelId);
+                            model.Transmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType", model.AdminEditFormModel.TransmissionId);
                             model.Types = new List<string>() { "New", "Used" };
-                            model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodyStyleType",
-                                new { @value = model.AdminFormModel.BodyStyleId, @id = "BodyStyleType", });
-                            model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                                new { @value = model.AdminFormModel.BodyColorId, @id = "BodyColor", });
-                            model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                                new { @value = model.AdminFormModel.InteriorColorId, @id = "InteriorColor", });
+                            model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodystyleType", model.AdminEditFormModel.BodyStyleId);
+                            model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.BodyColorId);
+                            model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.InteriorColorId);
 
                             TempData["Success"] = "Edited Successfully! Add or search another car to edit!";
 
                             return RedirectToAction("Index", "Admin");
                         }
 
-                        if (model.AdminFormModel.Picture != null && model.AdminFormModel.Picture.ContentLength > 0)
+                        if (model.AdminEditFormModel.Picture != null && model.AdminEditFormModel.Picture.ContentLength > 0)
                         {
 
                             var savepath = Server.MapPath("~/Images");
 
                             string fileName = "inventory-";
-                            string extension = Path.GetExtension(model.AdminFormModel.Picture.FileName);
+                            string extension = Path.GetExtension(model.AdminEditFormModel.Picture.FileName);
 
                             var filePath = Path.Combine(savepath, fileName + oldCar.CarId + extension);
 
@@ -291,7 +275,7 @@ namespace GuildCars.UI.Controllers
                             model.Car.IMGFilePath = oldCar.IMGFilePath;
                         }
 
-                        model.AdminFormModel.Picture.SaveAs(model.Car.IMGFilePath);
+                        model.AdminEditFormModel.Picture.SaveAs(model.Car.IMGFilePath);
 
                         var newFilePath = "/Images/" + Path.GetFileName(model.Car.IMGFilePath);
 
@@ -299,19 +283,13 @@ namespace GuildCars.UI.Controllers
 
                         _carsRepo.Update(car);
 
-                        model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName",
-                 new { @value = model.AdminFormModel.MakeId, @id = "Makes", @onchange = "javascript:getModels(this.value);" });
-                        model.Models = new SelectList(_modelRepo.GetModelsByMakeId(model.AdminFormModel.MakeId), "ModelId", "ModelName",
-                            new { @value = model.AdminFormModel.ModelId, @id = "Models", });
-                        model.Tranmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType",
-                            new { @value = model.AdminFormModel.TransmissionId, });
+                        model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName", model.AdminEditFormModel.MakeId);
+                        model.Models = new SelectList(_modelRepo.GetAll(), "ModelId", "ModelName", model.AdminEditFormModel.ModelId);
+                        model.Transmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType", model.AdminEditFormModel.TransmissionId);
                         model.Types = new List<string>() { "New", "Used" };
-                        model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodyStyleType",
-                            new { @value = model.AdminFormModel.BodyStyleId, @id = "BodyStyleType", });
-                        model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                            new { @value = model.AdminFormModel.BodyColorId, @id = "BodyColor", });
-                        model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                            new { @value = model.AdminFormModel.InteriorColorId, @id = "InteriorColor", });
+                        model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodystyleType", model.AdminEditFormModel.BodyStyleId);
+                        model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.BodyColorId);
+                        model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.InteriorColorId);
 
                         TempData["Success"] = "Edited Successfully! Add or search another car to edit!";
                         return RedirectToAction("Index", "Admin");
@@ -324,22 +302,15 @@ namespace GuildCars.UI.Controllers
             }
             else
             {
-                model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName",
-                 new { @value = model.AdminFormModel.MakeId, @id = "Makes", @onchange = "javascript:getModels(this.value);" });
-                model.Models = new SelectList(_modelRepo.GetModelsByMakeId(model.AdminFormModel.MakeId), "ModelId", "ModelName",
-                    new { @value = model.AdminFormModel.ModelId, @id = "Models", });
-                model.Tranmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType",
-                    new { @value = model.AdminFormModel.TransmissionId, });
+                model.Makes = new SelectList(_makeRepo.GetAll(), "MakeId", "MakeName", model.AdminEditFormModel.MakeId);
+                model.Models = new SelectList(_modelRepo.GetAll(), "ModelId", "ModelName", model.AdminEditFormModel.ModelId);
+                model.Transmissions = new SelectList(_transmissionRepository.GetAll(), "TransmissionId", "TransmissionType", model.AdminEditFormModel.TransmissionId);
                 model.Types = new List<string>() { "New", "Used" };
-                model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodyStyleType",
-                    new { @value = model.AdminFormModel.BodyStyleId, @id = "BodyStyleType", });
-                model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                    new { @value = model.AdminFormModel.BodyColorId, @id = "BodyColor", });
-                model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName",
-                    new { @value = model.AdminFormModel.InteriorColorId, @id = "InteriorColor", });
-
+                model.BodyStyles = new SelectList(_bodyStyleRepository.GetAll(), "BodyStyleId", "BodystyleType", model.AdminEditFormModel.BodyStyleId);
+                model.Colors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.BodyColorId);
+                model.IntColors = new SelectList(_colorRepo.GetAll(), "ColorId", "ColorName", model.AdminEditFormModel.InteriorColorId);
                 model.Car = oldCar;
-
+                
                 return View(model);
             }
         }
@@ -353,9 +324,8 @@ namespace GuildCars.UI.Controllers
                 return null;
             }
 
-            var id = int.Parse(Id);
             List<Model> models = new List<Model>();
-            models = _modelRepo.GetModelsByMakeId(id);
+            models = _modelRepo.GetModelsByMakeId(ParseMakeId(Id));
             SelectList selectModels = new SelectList(models, "ModelId", "ModelName", models[0].ModelId);
             return Json(selectModels, JsonRequestBehavior.AllowGet);
 
@@ -430,6 +400,7 @@ namespace GuildCars.UI.Controllers
         {
 
             var updatedUser = new User();
+            var oldUser = _userRepository.GetUserById(model.UserId);
 
             if (ModelState.IsValid)
             {
@@ -446,12 +417,18 @@ namespace GuildCars.UI.Controllers
                 {
                     updatedUser.PasswordHash = hasher.HashPassword(model.Password);
                 }
+                else
+                {
+                    updatedUser.PasswordHash = oldUser.PasswordHash;
+                }
 
                 _userRepository.Update(updatedUser);
 
                 UserIndexPageViewModel userIndexModel = new UserIndexPageViewModel();
 
                 userIndexModel.Users = _userRepository.GetUsers().ToList();
+
+                TempData["Success"] = "User edited successfully!";
 
                 return View("Users", userIndexModel);
             }
@@ -461,7 +438,7 @@ namespace GuildCars.UI.Controllers
             return View(model);
         }
 
-        
+
         [Authorize(Roles = "Admin")]
         public ActionResult ChangePassword()
         {
@@ -566,7 +543,7 @@ namespace GuildCars.UI.Controllers
             SpecialViewModel model = new SpecialViewModel();
             model.Specials = _specialsRepo.GetAll();
 
-            return Json(new { Success = true});
+            return Json(new { Success = true });
         }
 
         [Authorize(Roles = "Admin")]
@@ -586,6 +563,37 @@ namespace GuildCars.UI.Controllers
                 return RedirectToAction("Specials", "Admin");
             }
             return View(special);
+        }
+
+        public int ParseMakeId(string make)
+        {
+            switch (make)
+            {
+                case "Acura":
+                    return 2;
+                case "Toyota":
+                    return 1;
+                case "Ford":
+                    return 3;
+                case "Dodge":
+                    return 4;
+                case "Mock":
+                    return 5;
+                case "2":
+                    return 2;
+                case "1":
+                    return 1;
+                case "3":
+                    return 3;
+                case "4":
+                    return 4;
+                case "5":
+                    return 5;
+                default:
+                    return 1;
+            }
+
+
         }
     }
 }

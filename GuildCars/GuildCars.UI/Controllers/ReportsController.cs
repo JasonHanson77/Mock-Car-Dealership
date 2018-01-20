@@ -33,7 +33,7 @@ namespace GuildCars.UI.Controllers
         {
             SalesReportViewModel model = new SalesReportViewModel();
 
-            model.Users = new SelectList(_userRepo.GetUsers(), "UserName", "UserName", "-All-");
+            model.Users = new SelectList(_userRepo.GetUsersByRole("Sales"), "UserName", "UserName", "-All-");
 
             return View(model);
         }

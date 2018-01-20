@@ -207,7 +207,7 @@ namespace GuildCars.Data.Repositories.Mock
                 {
                     CarId = car.CarId,
                     ImageURL = car.IMGFilePath,
-                    Make = makeRepo.GetMakeById(car.MakeId).MakeName,
+                    Make = makeRepo.GetMakeById(car.MakeId.ToString()).MakeName,
                     Model = modelRepo.GetModelById(car.ModelId).ModelName,
                     MakeId = car.MakeId,
                     ModelId = car.ModelId,
@@ -307,7 +307,7 @@ namespace GuildCars.Data.Repositories.Mock
                     IMGURL = car.IMGFilePath,
                     MSRP = car.MSRP,
                     SalePrice = car.SalePrice,
-                    Make = _makeRepo.GetMakeById(car.MakeId).MakeName,
+                    Make = _makeRepo.GetMakeById(car.MakeId.ToString()).MakeName,
                     Model = _modelRepo.GetModelById(car.ModelId).ModelName,
                     Mileage = car.Mileage,
                     VIN = car.VIN,

@@ -110,7 +110,7 @@ namespace GuildCars.UI.Controllers
             DetailsViewModel model = new DetailsViewModel();
             model.Car = _carsRepo.GetCarById(Id);
             model.Model = _modelRepo.GetModelById(model.Car.ModelId).ModelName;
-            model.Make = _makeRepo.GetMakeById(model.Car.MakeId).MakeName;
+            model.Make = _makeRepo.GetMakeById(model.Car.MakeId.ToString()).MakeName;
             model.IntColor = _colorRepo.GetColorById(model.Car.InteriorColorId).ColorName;
             model.BodyColor = _colorRepo.GetColorById(model.Car.BodyColorId).ColorName;
             model.BodyStyle = _bodyStyleRepository.GetBodyStyleById(model.Car.BodyStyleId).BodyStyleType;

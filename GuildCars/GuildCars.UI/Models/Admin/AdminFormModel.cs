@@ -12,19 +12,19 @@ namespace GuildCars.UI.Models.Admin
     {
         public string Type { get; set; }
         public bool isNew { get; set; }
-        public string Make { get; set; }
+        public string MakeName { get; set; }
         public int MakeId { get; set; }
-        public string Model { get; set; }
+        public string ModelName { get; set; }
         public int ModelId { get; set; }
         public string Year { get; set; }
         public DateTime ModelYear { get; set; }
-        public string BodyStyle { get; set; }
+        public string BodyStyleType { get; set; }
         public int BodyStyleId { get; set; }
         public string Color { get; set; }
         public int BodyColorId { get; set; }
         public string Interior { get; set; }
         public int InteriorColorId { get; set; }
-        public string Transmission { get; set; }
+        public string TransmissionType { get; set; }
         public int TransmissionId { get; set; }
         public string Mileage { get; set; }
         public string VIN { get; set; }
@@ -45,13 +45,13 @@ namespace GuildCars.UI.Models.Admin
             SalePrice = PurchasePriceIsNumber(SalePriceInput);
             MSRP = PurchasePriceIsNumber(MSRPInput);
 
-            if (String.IsNullOrEmpty(Make))
+            if (String.IsNullOrEmpty(MakeName))
             {
                 errors.Add(new ValidationResult("You must select a make and model for this vehicle!",
                     new[] { "Make" }));
             }
 
-            if (String.IsNullOrEmpty(Model))
+            if (String.IsNullOrEmpty(ModelName))
             {
                 errors.Add(new ValidationResult("You must select a make and model for this vehicle!",
                     new[] { "Model" }));

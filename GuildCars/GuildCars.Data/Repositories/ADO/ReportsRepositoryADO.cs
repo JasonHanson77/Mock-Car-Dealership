@@ -137,8 +137,8 @@ namespace GuildCars.Data.Repositories.ADO
 
                 if (!string.IsNullOrEmpty(Parameters.UserName))
                 {
-                    query += "AND UserName LIKE @UserName ";
-                    cmd.Parameters.AddWithValue("@UserName", Parameters.UserName + '%');
+                    query += "AND UserName = @UserName ";
+                    cmd.Parameters.AddWithValue("@UserName", Parameters.UserName);
                 }
                 
                 query += "GROUP BY UserName, Id ORDER BY TotalSales DESC";

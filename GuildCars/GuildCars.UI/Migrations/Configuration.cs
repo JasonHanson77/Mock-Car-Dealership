@@ -31,9 +31,9 @@ namespace GuildCars.UI.Migrations
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "admin3@testy.test", FirstName="The", LastName = "Administrator", Email="admin3@testy.test" };
+                var user = new ApplicationUser { UserName = "Admin", FirstName="The", LastName = "Administrator", Email="admin3@testy.test", UserRole = "Admin" };
 
-                manager.Create(user, "testing123");
+                manager.Create(user, "testing123!");
                 manager.AddToRole(user.Id, "Admin");
             }
 
@@ -50,9 +50,9 @@ namespace GuildCars.UI.Migrations
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "Sales", FirstName = "Barb", LastName = "Wire", Email ="barb@test.test" };
+                var user = new ApplicationUser { UserName = "Sales", FirstName = "Barb", LastName = "Wire", Email ="barb@test.test", UserRole = "Sales" };
 
-                manager.Create(user, "testing123");
+                manager.Create(user, "testing123!");
                 manager.AddToRole(user.Id, "Sales");
             }
         }
